@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TouristAgency.Infrastructure.ValidationConstants;
+using TouristAgency.Infrastructure.Data.ValidationConstants;
 
-namespace TouristAgency.Infrastructure.Models
+namespace TouristAgency.Infrastructure.Data.Models
 {
     [Comment("This table shows the destinations in which we make trips")]
     public class Destination
@@ -25,6 +25,7 @@ namespace TouristAgency.Infrastructure.Models
         [Required]
         [Comment("Country identifier of destination")]
         public int CountryId { get; set; }
+
 
         [ForeignKey(nameof(CountryId))]
         [Comment("Country property for country identifier")]
