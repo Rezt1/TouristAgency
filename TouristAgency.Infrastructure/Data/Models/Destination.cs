@@ -34,5 +34,9 @@ namespace TouristAgency.Infrastructure.Data.Models
         [Required]
         [Comment("Offer property for what offer we have for the current destination")]
         public Offer Offer { get; set; } = null!;
+
+
+        [Comment("Navigation property which leads to the cruises which pass by this destination")]
+        public ICollection<CruiseDestination> CruisesDestinations { get; set; } = new List<CruiseDestination>();
     }
 }

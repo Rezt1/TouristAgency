@@ -15,6 +15,8 @@ namespace TouristAgency.Data
         {
             builder.ApplyConfiguration(new OfferTransportTypePriceConfiguration());
             builder.ApplyConfiguration(new HotelRoomTypePriceConfiguration());
+            builder.ApplyConfiguration(new CruiseRoomTypeCruisePriceConfiguration());
+            builder.ApplyConfiguration(new CruiseDestinationConfiguration());
 
             base.OnModelCreating(builder);
         }
