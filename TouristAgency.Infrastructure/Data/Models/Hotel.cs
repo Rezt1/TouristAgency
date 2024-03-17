@@ -31,6 +31,9 @@ namespace TouristAgency.Infrastructure.Data.Models
         [Comment("Navigation property for OfferId which leads to the Offer table")]
         public Offer Offer { get; set; } = null!;
 
+        [Comment("Navigation property which leads to the holiday which has the current hotel as its main hotel")]
+        public OrganizedHoliday? OrganizedHoliday { get; set; }
+
         [Comment("Navigation property leading to the prices of rooms")]
         public ICollection<HotelRoomTypePrice> HotelsRoomTypesPrices { get; set; } = new List<HotelRoomTypePrice>();
     }
