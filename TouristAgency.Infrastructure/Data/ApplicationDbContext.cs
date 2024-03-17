@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TouristAgency.Infrastructure.Data.Configurations;
 
 namespace TouristAgency.Data
 {
@@ -8,6 +9,20 @@ namespace TouristAgency.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new OfferTransportTypePriceConfiguration());
+            builder.ApplyConfiguration(new HotelRoomTypePriceConfiguration());
+            builder.ApplyConfiguration(new CruiseRoomTypeCruisePriceConfiguration());
+            builder.ApplyConfiguration(new CruiseDestinationConfiguration());
+            builder.ApplyConfiguration(new ActivityBookedOrganizedHolidayConfiguration());
+            builder.ApplyConfiguration(new BookedOrganizedHolidayRoomTypeConfiguration());
+            builder.ApplyConfiguration(new UnorganizedHolidayRoomTypeConfiguration());
+            builder.ApplyConfiguration(new CruiseRoomTypeBookedCruiseConfiguration());
+
+            base.OnModelCreating(builder);
         }
     }
 }
