@@ -27,6 +27,14 @@ namespace TouristAgency.Infrastructure.Data.Models
         [Comment("TransportType identifier")]
         public int TransportTypeId { get; set; }
 
+        [Required]
+        [Comment("Hotel identifier for hotel in which the user(s) will be staying in")]
+        public int HotelId { get; set; }
+
+        [Required]
+        [Comment("RoomType identifier for room in which the user(s) will be staying in")]
+        public int RoomTypeId { get; set; }
+
 
         [ForeignKey(nameof(OfferId))]
         [Comment("Navigation property of OfferId")]
@@ -35,5 +43,13 @@ namespace TouristAgency.Infrastructure.Data.Models
         [ForeignKey(nameof(TransportTypeId))]
         [Comment("Navigation property of TransportTypeId")]
         public TransportType TransportType { get; set; } = null!;
+
+        [ForeignKey(nameof(HotelId))]
+        [Comment("Navigation property of HotelId")]
+        public Hotel Hotel { get; set; } = null!;
+
+        [ForeignKey(nameof(RoomTypeId))]
+        [Comment("Navigation property of RoomTypeId")]
+        public RoomType RoomType { get; set; } = null!;
     }
 }

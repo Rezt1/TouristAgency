@@ -28,6 +28,10 @@ namespace TouristAgency.Infrastructure.Data.Models
         [Comment("Checks if the offer can be booked customly by the user")]
         public bool CanBeUnorganized { get; set; }
 
+        [Required]
+        [Comment("Checks if the offer is available for booking")]
+        public bool IsAvailable { get; set; }
+
 
         [ForeignKey(nameof(DestinationId))]
         [Comment("Destination property for destination identifier")]
@@ -38,5 +42,8 @@ namespace TouristAgency.Infrastructure.Data.Models
 
         [Comment("Navigation property which leads to the price of transport for current offer")]
         public ICollection<OfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = new List<OfferTransportTypePrice>();
+
+        [Comment("Navigation property which shows available hotels for the offer")]
+        public ICollection<Hotel> Hotels { get; set; } = new List<Hotel>();
     }
 }

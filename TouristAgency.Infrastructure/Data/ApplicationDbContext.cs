@@ -14,6 +14,7 @@ namespace TouristAgency.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new OfferTransportTypePriceConfiguration());
+            builder.ApplyConfiguration(new HotelRoomTypePriceConfiguration());
 
             base.OnModelCreating(builder);
         }
