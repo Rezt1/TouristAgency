@@ -42,5 +42,8 @@ namespace TouristAgency.Infrastructure.Data.Models
         [ForeignKey(nameof(TourId))]
         [Comment("Navigation property of TourId")]
         public Tour Tour { get; set; } = null!;
+
+        [Comment("Navigation property which shows which activities were chosen for the given trip")]
+        public ICollection<ActivityBookedOrganizedHoliday> ActivitiesBookedOrganizedHolidays { get; set; } = new List<ActivityBookedOrganizedHoliday>();
     }
 }

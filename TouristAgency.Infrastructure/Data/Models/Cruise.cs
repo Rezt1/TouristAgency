@@ -53,5 +53,8 @@ namespace TouristAgency.Infrastructure.Data.Models
 
         [Comment("Navigation property which shows description of all days in the cruise")]
         public ICollection<CruiseDay> CruiseDays { get; set;} = new List<CruiseDay>();
+
+        [Comment("Navigation property which shows how many times the cruise was booked and with how many rooms")]
+        public ICollection<BookedCruise> BookedCruises { get; set; } = new List<BookedCruise>();
     }
 }

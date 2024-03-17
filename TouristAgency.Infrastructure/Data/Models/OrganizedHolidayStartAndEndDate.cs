@@ -26,5 +26,8 @@ namespace TouristAgency.Infrastructure.Data.Models
         [ForeignKey(nameof(OrganizedHolidayId))]
         [Comment("Navigation property of OrganizedHolidayId")]
         public OrganizedHoliday OrganizedHoliday { get; set; } = null!;
+
+        [Comment("Navigation property which leads to the booked trips with everything in it")]
+        public ICollection<BookedOrganizedHoliday> BookedOrganizedHolidays { get; set; } = new List<BookedOrganizedHoliday>();
     }
 }

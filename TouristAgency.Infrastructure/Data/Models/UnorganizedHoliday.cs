@@ -31,10 +31,6 @@ namespace TouristAgency.Infrastructure.Data.Models
         [Comment("Hotel identifier for hotel in which the user(s) will be staying in")]
         public int HotelId { get; set; }
 
-        [Required]
-        [Comment("RoomType identifier for room in which the user(s) will be staying in")]
-        public int RoomTypeId { get; set; }
-
 
         [ForeignKey(nameof(OfferId))]
         [Comment("Navigation property of OfferId")]
@@ -48,8 +44,7 @@ namespace TouristAgency.Infrastructure.Data.Models
         [Comment("Navigation property of HotelId")]
         public Hotel Hotel { get; set; } = null!;
 
-        [ForeignKey(nameof(RoomTypeId))]
-        [Comment("Navigation property of RoomTypeId")]
-        public RoomType RoomType { get; set; } = null!;
+        [Comment("Navigation property whcih shows how many rooms were booked for the current trip")]
+        public ICollection<UnorganizedHolidayRoomType> UnorganizedHolidaysRoomTypes { get; set; } = new List<UnorganizedHolidayRoomType>();
     }
 }
