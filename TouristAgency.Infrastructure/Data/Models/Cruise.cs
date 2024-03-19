@@ -56,5 +56,8 @@ namespace TouristAgency.Infrastructure.Data.Models
 
         [Comment("Navigation property which shows how many times the cruise was booked and with how many rooms")]
         public ICollection<BookedCruise> BookedCruises { get; set; } = new List<BookedCruise>();
+
+        [Comment("Navigation property which shows review about the current cruise")]
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
