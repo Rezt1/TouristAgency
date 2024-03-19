@@ -45,5 +45,8 @@ namespace TouristAgency.Infrastructure.Data.Models
 
         [Comment("Navigation property which shows available hotels for the offer")]
         public ICollection<Hotel> Hotels { get; set; } = new List<Hotel>();
+
+        [Comment("Navigation property which shows reviews about the current offer")]
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

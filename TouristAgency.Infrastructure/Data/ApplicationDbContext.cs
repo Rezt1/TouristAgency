@@ -21,6 +21,8 @@ namespace TouristAgency.Data
             builder.ApplyConfiguration(new BookedOrganizedHolidayRoomTypeConfiguration());
             builder.ApplyConfiguration(new UnorganizedHolidayRoomTypeConfiguration());
             builder.ApplyConfiguration(new CruiseRoomTypeBookedCruiseConfiguration());
+            builder.ApplyConfiguration(new BookingConfiguration());
+            builder.ApplyConfiguration(new ReviewConfiguration());
 
             base.OnModelCreating(builder);
         }

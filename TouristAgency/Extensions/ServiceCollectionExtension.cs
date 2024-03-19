@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TouristAgency.Data;
+using TouristAgency.Infrastructure.Data.Models;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -23,8 +23,11 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services)
         {
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options => {
+
+            })
+            .AddRoles<ApplicationRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
         }
