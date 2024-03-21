@@ -37,6 +37,9 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("Destination property for destination identifier")]
         public Destination Destination { get; set; } = null!;
 
+        [Comment("Navigation property leading to organizedHoliday for current offer")]
+        public OrganizedHoliday OrganizedHoliday { get; set; } = null!;
+
         [Comment("Navigation property for UnorganizedHoliday which could be null")]
         public UnorganizedHoliday? UnorganizedHoliday { get; set; }
 

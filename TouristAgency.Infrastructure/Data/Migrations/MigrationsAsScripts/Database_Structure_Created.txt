@@ -1,0 +1,938 @@
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+CREATE TABLE [AspNetRoles] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Extended IdentityRole';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AspNetRoles';
+GO
+
+CREATE TABLE [AspNetUsers] (
+    [Id] uniqueidentifier NOT NULL,
+    [FirstName] nvarchar(100) NULL,
+    [LastName] nvarchar(100) NULL,
+    [UserName] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [Email] nvarchar(256) NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Extended IdentityUser';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AspNetUsers';
+SET @description = N'First name of user';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AspNetUsers', 'COLUMN', N'FirstName';
+SET @description = N'Last name of user';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AspNetUsers', 'COLUMN', N'LastName';
+GO
+
+CREATE TABLE [Continents] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(20) NOT NULL,
+    CONSTRAINT [PK_Continents] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Table about continents we make trips in';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Continents';
+SET @description = N'Continent table identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Continents', 'COLUMN', N'Id';
+SET @description = N'Continent name';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Continents', 'COLUMN', N'Name';
+GO
+
+CREATE TABLE [CruiseRoomTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(30) NOT NULL,
+    CONSTRAINT [PK_CruiseRoomTypes] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows what kind of rooms there are in a cruise';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypes';
+SET @description = N'CruiseRoomType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypes', 'COLUMN', N'Id';
+SET @description = N'Name of room type in cruise';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypes', 'COLUMN', N'Name';
+GO
+
+CREATE TABLE [Cruises] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [EmbarkDate] datetime2 NOT NULL,
+    [ReturnDate] datetime2 NOT NULL,
+    [Price] decimal(18,2) NOT NULL,
+    [MinPeopleNeeded] int NOT NULL,
+    [MaxPeople] int NOT NULL,
+    [IsActive] bit NOT NULL,
+    CONSTRAINT [PK_Cruises] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows cruises the agency has to offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises';
+SET @description = N'Cruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'Id';
+SET @description = N'Name of cruise';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'Name';
+SET @description = N'Description of cruise';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'Description';
+SET @description = N'Date on which the cruise embarks';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'EmbarkDate';
+SET @description = N'Date on whic the cruise returns';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'ReturnDate';
+SET @description = N'Price of services in cruiuse excluding room price';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'Price';
+SET @description = N'Minumum people needed for the agency to make this trip happen';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'MinPeopleNeeded';
+SET @description = N'Maximum people which the agency can take';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'MaxPeople';
+SET @description = N'Shows if the cruise is available';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Cruises', 'COLUMN', N'IsActive';
+GO
+
+CREATE TABLE [RoomTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(30) NOT NULL,
+    CONSTRAINT [PK_RoomTypes] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows what kind of rooms the agency can offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'RoomTypes';
+SET @description = N'RoomType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'RoomTypes', 'COLUMN', N'Id';
+SET @description = N'Name of RoomType';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'RoomTypes', 'COLUMN', N'Name';
+GO
+
+CREATE TABLE [Tours] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(150) NOT NULL,
+    [Description] nvarchar(400) NOT NULL,
+    CONSTRAINT [PK_Tours] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows the tour conducted in the given trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Tours';
+SET @description = N'Tour identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Tours', 'COLUMN', N'Id';
+SET @description = N'Name of tour';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Tours', 'COLUMN', N'Name';
+SET @description = N'Description of tour';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Tours', 'COLUMN', N'Description';
+GO
+
+CREATE TABLE [TransportTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(20) NOT NULL,
+    CONSTRAINT [PK_TransportTypes] PRIMARY KEY ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows what type of transport is availabe for a specific offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'TransportTypes';
+SET @description = N'TransportType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'TransportTypes', 'COLUMN', N'Id';
+SET @description = N'Name of transport';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'TransportTypes', 'COLUMN', N'Name';
+GO
+
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [RoleId] uniqueidentifier NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] uniqueidentifier NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] uniqueidentifier NOT NULL,
+    [RoleId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] uniqueidentifier NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [Countries] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(60) NOT NULL,
+    [ContinentId] int NOT NULL,
+    CONSTRAINT [PK_Countries] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Countries_Continents_ContinentId] FOREIGN KEY ([ContinentId]) REFERENCES [Continents] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Countries that we make trips in';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Countries';
+SET @description = N'Country identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Countries', 'COLUMN', N'Id';
+SET @description = N'Country name';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Countries', 'COLUMN', N'Name';
+SET @description = N'Continent identifier of country';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Countries', 'COLUMN', N'ContinentId';
+GO
+
+CREATE TABLE [BookedCruises] (
+    [Id] int NOT NULL IDENTITY,
+    [CruiseId] int NOT NULL,
+    CONSTRAINT [PK_BookedCruises] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_BookedCruises_Cruises_CruiseId] FOREIGN KEY ([CruiseId]) REFERENCES [Cruises] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows the booked cruise with the number of booked rooms';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedCruises';
+SET @description = N'BookedCruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedCruises', 'COLUMN', N'Id';
+SET @description = N'Cruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedCruises', 'COLUMN', N'CruiseId';
+GO
+
+CREATE TABLE [CruiseDays] (
+    [Id] int NOT NULL IDENTITY,
+    [DayNumber] int NOT NULL,
+    [Description] nvarchar(800) NOT NULL,
+    [CruiseId] int NOT NULL,
+    CONSTRAINT [PK_CruiseDays] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CruiseDays_Cruises_CruiseId] FOREIGN KEY ([CruiseId]) REFERENCES [Cruises] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows the description of a single day in a cruise vacation';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseDays';
+SET @description = N'CruiseDay identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseDays', 'COLUMN', N'Id';
+SET @description = N'Number of day';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseDays', 'COLUMN', N'DayNumber';
+SET @description = N'Description of current day';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseDays', 'COLUMN', N'Description';
+SET @description = N'Cruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseDays', 'COLUMN', N'CruiseId';
+GO
+
+CREATE TABLE [CruiseRoomTypesCruisesPrices] (
+    [CruiseId] int NOT NULL,
+    [CruiseRoomTypeId] int NOT NULL,
+    [PricePerNight] decimal(18,2) NOT NULL,
+    CONSTRAINT [PK_CruiseRoomTypesCruisesPrices] PRIMARY KEY ([CruiseRoomTypeId], [CruiseId]),
+    CONSTRAINT [FK_CruiseRoomTypesCruisesPrices_CruiseRoomTypes_CruiseRoomTypeId] FOREIGN KEY ([CruiseRoomTypeId]) REFERENCES [CruiseRoomTypes] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_CruiseRoomTypesCruisesPrices_Cruises_CruiseId] FOREIGN KEY ([CruiseId]) REFERENCES [Cruises] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows the price of room in a cruise';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesCruisesPrices';
+SET @description = N'Cruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesCruisesPrices', 'COLUMN', N'CruiseId';
+SET @description = N'CruiseRoomTypeIdentifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesCruisesPrices', 'COLUMN', N'CruiseRoomTypeId';
+SET @description = N'Price of room per night';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesCruisesPrices', 'COLUMN', N'PricePerNight';
+GO
+
+CREATE TABLE [Activities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(60) NOT NULL,
+    [Description] nvarchar(800) NOT NULL,
+    [Price] decimal(18,2) NOT NULL,
+    [MinPeopleNeeded] int NOT NULL,
+    [IsAvailable] bit NOT NULL,
+    [TourId] int NOT NULL,
+    CONSTRAINT [PK_Activities] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Activities_Tours_TourId] FOREIGN KEY ([TourId]) REFERENCES [Tours] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows the activiy made in the tour';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities';
+SET @description = N'Activity identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'Id';
+SET @description = N'Name of activity';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'Name';
+SET @description = N'Description of activity';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'Description';
+SET @description = N'Price of activity';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'Price';
+SET @description = N'Minumum amount of people needed for the activity to be made';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'MinPeopleNeeded';
+SET @description = N'Shows if the activity is currently available for the tour';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'IsAvailable';
+SET @description = N'Tour identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Activities', 'COLUMN', N'TourId';
+GO
+
+CREATE TABLE [Destinations] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(150) NOT NULL,
+    [Description] nvarchar(400) NOT NULL,
+    [CountryId] int NOT NULL,
+    CONSTRAINT [PK_Destinations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Destinations_Countries_CountryId] FOREIGN KEY ([CountryId]) REFERENCES [Countries] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows the destinations in which we make trips';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Destinations';
+SET @description = N'Destination identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Destinations', 'COLUMN', N'Id';
+SET @description = N'Name of destination';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Destinations', 'COLUMN', N'Name';
+SET @description = N'Description of destination';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Destinations', 'COLUMN', N'Description';
+SET @description = N'Country identifier of destination';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Destinations', 'COLUMN', N'CountryId';
+GO
+
+CREATE TABLE [CruiseRoomTypesBookedCruises] (
+    [CruiseRoomTypeId] int NOT NULL,
+    [BookedCruiseId] int NOT NULL,
+    CONSTRAINT [PK_CruiseRoomTypesBookedCruises] PRIMARY KEY ([CruiseRoomTypeId], [BookedCruiseId]),
+    CONSTRAINT [FK_CruiseRoomTypesBookedCruises_BookedCruises_BookedCruiseId] FOREIGN KEY ([BookedCruiseId]) REFERENCES [BookedCruises] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_CruiseRoomTypesBookedCruises_CruiseRoomTypes_CruiseRoomTypeId] FOREIGN KEY ([CruiseRoomTypeId]) REFERENCES [CruiseRoomTypes] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows how many rooms were booked for a give cruise';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesBookedCruises';
+SET @description = N'CruiseRoomType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesBookedCruises', 'COLUMN', N'CruiseRoomTypeId';
+SET @description = N'BookedCruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesBookedCruises', 'COLUMN', N'BookedCruiseId';
+GO
+
+CREATE TABLE [CruisesDestinations] (
+    [CruiseId] int NOT NULL,
+    [DestinationId] int NOT NULL,
+    CONSTRAINT [PK_CruisesDestinations] PRIMARY KEY ([CruiseId], [DestinationId]),
+    CONSTRAINT [FK_CruisesDestinations_Cruises_CruiseId] FOREIGN KEY ([CruiseId]) REFERENCES [Cruises] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_CruisesDestinations_Destinations_DestinationId] FOREIGN KEY ([DestinationId]) REFERENCES [Destinations] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows the destination through which cruises pass by';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruisesDestinations';
+SET @description = N'Cruise identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruisesDestinations', 'COLUMN', N'CruiseId';
+SET @description = N'Destination identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruisesDestinations', 'COLUMN', N'DestinationId';
+GO
+
+CREATE TABLE [Offers] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(300) NOT NULL,
+    [Discount] real NULL,
+    [DestinationId] int NOT NULL,
+    [CanBeUnorganized] bit NOT NULL,
+    [IsAvailable] bit NOT NULL,
+    CONSTRAINT [PK_Offers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Offers_Destinations_DestinationId] FOREIGN KEY ([DestinationId]) REFERENCES [Destinations] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows what we offer for a given destination';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers';
+SET @description = N'Offer identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers', 'COLUMN', N'Id';
+SET @description = N'Name of offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers', 'COLUMN', N'Name';
+SET @description = N'Discount of offer available to only special users';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers', 'COLUMN', N'Discount';
+SET @description = N'Identifier of destination in which is the offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers', 'COLUMN', N'DestinationId';
+SET @description = N'Checks if the offer can be booked customly by the user';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers', 'COLUMN', N'CanBeUnorganized';
+SET @description = N'Checks if the offer is available for booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Offers', 'COLUMN', N'IsAvailable';
+GO
+
+CREATE TABLE [Hotels] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(60) NOT NULL,
+    [Location] nvarchar(200) NOT NULL,
+    [OfferId] int NOT NULL,
+    CONSTRAINT [PK_Hotels] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Hotels_Offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [Offers] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows what hotels the agency has to present for a given offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Hotels';
+SET @description = N'Hotel identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Hotels', 'COLUMN', N'Id';
+SET @description = N'Name of Hotel';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Hotels', 'COLUMN', N'Name';
+SET @description = N'Shows exact location of the hotel';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Hotels', 'COLUMN', N'Location';
+SET @description = N'Offer identifier, shows the current hotel for what offer is used';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Hotels', 'COLUMN', N'OfferId';
+GO
+
+CREATE TABLE [OffersTransportTypesPrices] (
+    [OfferId] int NOT NULL,
+    [TransportTypeId] int NOT NULL,
+    [Price] decimal(18,2) NOT NULL,
+    CONSTRAINT [PK_OffersTransportTypesPrices] PRIMARY KEY ([OfferId], [TransportTypeId]),
+    CONSTRAINT [FK_OffersTransportTypesPrices_Offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [Offers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_OffersTransportTypesPrices_TransportTypes_TransportTypeId] FOREIGN KEY ([TransportTypeId]) REFERENCES [TransportTypes] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows the prices of different transports in different offers';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OffersTransportTypesPrices';
+SET @description = N'Offer identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OffersTransportTypesPrices', 'COLUMN', N'OfferId';
+SET @description = N'TransportType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OffersTransportTypesPrices', 'COLUMN', N'TransportTypeId';
+SET @description = N'Price of transport in given offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OffersTransportTypesPrices', 'COLUMN', N'Price';
+GO
+
+CREATE TABLE [Reviews] (
+    [Id] int NOT NULL IDENTITY,
+    [Title] nvarchar(30) NOT NULL,
+    [Content] nvarchar(400) NOT NULL,
+    [DateOfWriting] datetime2 NOT NULL,
+    [ReviewerId] uniqueidentifier NOT NULL,
+    [ReviewedTripId] int NOT NULL,
+    [Discriminator] nvarchar(50) NOT NULL,
+    [OfferId] int NULL,
+    [CruiseId] int NULL,
+    CONSTRAINT [PK_Reviews] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Reviews_AspNetUsers_ReviewerId] FOREIGN KEY ([ReviewerId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Reviews_Cruises_CruiseId] FOREIGN KEY ([CruiseId]) REFERENCES [Cruises] ([Id]),
+    CONSTRAINT [FK_Reviews_Offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [Offers] ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Review written by an user about a trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews';
+SET @description = N'Review identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'Id';
+SET @description = N'Title of review';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'Title';
+SET @description = N'Content of review';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'Content';
+SET @description = N'Date of writing the review';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'DateOfWriting';
+SET @description = N'Identifier of user who wrote the review(could be anonymous)';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'ReviewerId';
+SET @description = N'Identifier of trip which was reviewed';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'ReviewedTripId';
+SET @description = N'Discriminator which will signalize which navigation property should be filled';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Reviews', 'COLUMN', N'Discriminator';
+GO
+
+CREATE TABLE [HotelsRoomTypesPrices] (
+    [HotelId] int NOT NULL,
+    [RoomTypeId] int NOT NULL,
+    [PricePerNight] decimal(18,2) NOT NULL,
+    CONSTRAINT [PK_HotelsRoomTypesPrices] PRIMARY KEY ([HotelId], [RoomTypeId]),
+    CONSTRAINT [FK_HotelsRoomTypesPrices_Hotels_HotelId] FOREIGN KEY ([HotelId]) REFERENCES [Hotels] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_HotelsRoomTypesPrices_RoomTypes_RoomTypeId] FOREIGN KEY ([RoomTypeId]) REFERENCES [RoomTypes] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows the price of a RoomType in a given hotel';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'HotelsRoomTypesPrices';
+SET @description = N'Hotel identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'HotelsRoomTypesPrices', 'COLUMN', N'HotelId';
+SET @description = N'RoomType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'HotelsRoomTypesPrices', 'COLUMN', N'RoomTypeId';
+SET @description = N'Price of a roomType in a given hotel';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'HotelsRoomTypesPrices', 'COLUMN', N'PricePerNight';
+GO
+
+CREATE TABLE [OrganizedHolidays] (
+    [Id] int NOT NULL IDENTITY,
+    [OfferId] int NOT NULL,
+    [TransportTypeId] int NOT NULL,
+    [HotelId] int NOT NULL,
+    [TourId] int NOT NULL,
+    [Price] decimal(18,2) NOT NULL,
+    [MinPeopleNeeded] int NOT NULL,
+    [MaxPeople] int NOT NULL,
+    [DayOneDescription] nvarchar(800) NOT NULL,
+    [LastDayDescription] nvarchar(800) NOT NULL,
+    [IsActive] bit NOT NULL,
+    CONSTRAINT [PK_OrganizedHolidays] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_OrganizedHolidays_Hotels_HotelId] FOREIGN KEY ([HotelId]) REFERENCES [Hotels] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_OrganizedHolidays_Offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [Offers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_OrganizedHolidays_Tours_TourId] FOREIGN KEY ([TourId]) REFERENCES [Tours] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_OrganizedHolidays_TransportTypes_TransportTypeId] FOREIGN KEY ([TransportTypeId]) REFERENCES [TransportTypes] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity represents a trip which is organized by the agency';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays';
+SET @description = N'OrganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'Id';
+SET @description = N'Offer identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'OfferId';
+SET @description = N'TransportType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'TransportTypeId';
+SET @description = N'Hotel identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'HotelId';
+SET @description = N'Tour identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'TourId';
+SET @description = N'Price of OrganizedHoliday, it includes the hotel services price(excluding room price) and transport price. It does not include activities price';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'Price';
+SET @description = N'Minumum people needed for the organized holiday to be made';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'MinPeopleNeeded';
+SET @description = N'Max people which can go to the organized holiday';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'MaxPeople';
+SET @description = N'Description of the first day of the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'DayOneDescription';
+SET @description = N'Description of the last day of the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'LastDayDescription';
+SET @description = N'Shows if the organized holiday is available or not';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'IsActive';
+GO
+
+CREATE TABLE [UnorganizedHolidays] (
+    [Id] int NOT NULL IDENTITY,
+    [OfferId] int NOT NULL,
+    [CheckInDate] datetime2 NOT NULL,
+    [CheckOutDate] datetime2 NOT NULL,
+    [TransportTypeId] int NOT NULL,
+    [HotelId] int NOT NULL,
+    [RoomTypeId] int NULL,
+    CONSTRAINT [PK_UnorganizedHolidays] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_UnorganizedHolidays_Hotels_HotelId] FOREIGN KEY ([HotelId]) REFERENCES [Hotels] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_UnorganizedHolidays_Offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [Offers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_UnorganizedHolidays_RoomTypes_RoomTypeId] FOREIGN KEY ([RoomTypeId]) REFERENCES [RoomTypes] ([Id]),
+    CONSTRAINT [FK_UnorganizedHolidays_TransportTypes_TransportTypeId] FOREIGN KEY ([TransportTypeId]) REFERENCES [TransportTypes] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'These are holidays which don''t have tours organized by the agency and the user chooses where to stay, when to go and what to do';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays';
+SET @description = N'UnorganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'Id';
+SET @description = N'Offer identifier related to current unorganizedHoliday';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'OfferId';
+SET @description = N'Date of checking in the booked hotel';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'CheckInDate';
+SET @description = N'Date of checking out the booked hotel';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'CheckOutDate';
+SET @description = N'TransportType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'TransportTypeId';
+SET @description = N'Hotel identifier for hotel in which the user(s) will be staying in';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'HotelId';
+GO
+
+CREATE TABLE [Image] (
+    [Id] nvarchar(450) NOT NULL,
+    [Data] varbinary(max) NOT NULL,
+    [ReviewId] int NULL,
+    CONSTRAINT [PK_Image] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Image_Reviews_ReviewId] FOREIGN KEY ([ReviewId]) REFERENCES [Reviews] ([Id])
+);
+GO
+
+CREATE TABLE [OrganizedHolidayStartAndEndDates] (
+    [Id] int NOT NULL IDENTITY,
+    [OrganizedHolidayId] int NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [EndDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_OrganizedHolidayStartAndEndDates] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_OrganizedHolidayStartAndEndDates_OrganizedHolidays_OrganizedHolidayId] FOREIGN KEY ([OrganizedHolidayId]) REFERENCES [OrganizedHolidays] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity contains the start and end date of an organizedHoliday';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidayStartAndEndDates';
+SET @description = N'OrganizedHolidayStartAndEndDate identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidayStartAndEndDates', 'COLUMN', N'Id';
+SET @description = N'OrganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidayStartAndEndDates', 'COLUMN', N'OrganizedHolidayId';
+SET @description = N'Date of setting off for the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidayStartAndEndDates', 'COLUMN', N'StartDate';
+SET @description = N'Date of coming back from the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidayStartAndEndDates', 'COLUMN', N'EndDate';
+GO
+
+CREATE TABLE [UnorganizedHolidaysRoomTypes] (
+    [UnorganizedHolidayId] int NOT NULL,
+    [RoomTypeId] int NOT NULL,
+    CONSTRAINT [PK_UnorganizedHolidaysRoomTypes] PRIMARY KEY ([UnorganizedHolidayId], [RoomTypeId]),
+    CONSTRAINT [FK_UnorganizedHolidaysRoomTypes_RoomTypes_RoomTypeId] FOREIGN KEY ([RoomTypeId]) REFERENCES [RoomTypes] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_UnorganizedHolidaysRoomTypes_UnorganizedHolidays_UnorganizedHolidayId] FOREIGN KEY ([UnorganizedHolidayId]) REFERENCES [UnorganizedHolidays] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows how many rooms were booked for a certain trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidaysRoomTypes';
+SET @description = N'UnorganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidaysRoomTypes', 'COLUMN', N'UnorganizedHolidayId';
+SET @description = N'RoopType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidaysRoomTypes', 'COLUMN', N'RoomTypeId';
+GO
+
+CREATE TABLE [BookedOrganizedHolidays] (
+    [Id] int NOT NULL IDENTITY,
+    [OrganizedHolidayStartAndEndDateId] int NOT NULL,
+    CONSTRAINT [PK_BookedOrganizedHolidays] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_BookedOrganizedHolidays_OrganizedHolidayStartAndEndDates_OrganizedHolidayStartAndEndDateId] FOREIGN KEY ([OrganizedHolidayStartAndEndDateId]) REFERENCES [OrganizedHolidayStartAndEndDates] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'this entity shows the date, room type and signed activities for the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidays';
+SET @description = N'BookedOrganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidays', 'COLUMN', N'Id';
+SET @description = N'OrganizedHolidayStartAndEndDate identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidays', 'COLUMN', N'OrganizedHolidayStartAndEndDateId';
+GO
+
+CREATE TABLE [ActivitiesBookedOrganizedHolidays] (
+    [ActivityId] int NOT NULL,
+    [BookedOrganizedHolidayId] int NOT NULL,
+    CONSTRAINT [PK_ActivitiesBookedOrganizedHolidays] PRIMARY KEY ([ActivityId], [BookedOrganizedHolidayId]),
+    CONSTRAINT [FK_ActivitiesBookedOrganizedHolidays_Activities_ActivityId] FOREIGN KEY ([ActivityId]) REFERENCES [Activities] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_ActivitiesBookedOrganizedHolidays_BookedOrganizedHolidays_BookedOrganizedHolidayId] FOREIGN KEY ([BookedOrganizedHolidayId]) REFERENCES [BookedOrganizedHolidays] ([Id]) ON DELETE NO ACTION
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity gives info about what activities are booked for the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'ActivitiesBookedOrganizedHolidays';
+SET @description = N'Activity identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'ActivitiesBookedOrganizedHolidays', 'COLUMN', N'ActivityId';
+SET @description = N'BookedOrganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'ActivitiesBookedOrganizedHolidays', 'COLUMN', N'BookedOrganizedHolidayId';
+GO
+
+CREATE TABLE [BookedOrganizedHolidaysRoomTypes] (
+    [BookedOrganizedHolidayId] int NOT NULL,
+    [RoomTypeId] int NOT NULL,
+    CONSTRAINT [PK_BookedOrganizedHolidaysRoomTypes] PRIMARY KEY ([BookedOrganizedHolidayId], [RoomTypeId]),
+    CONSTRAINT [FK_BookedOrganizedHolidaysRoomTypes_BookedOrganizedHolidays_BookedOrganizedHolidayId] FOREIGN KEY ([BookedOrganizedHolidayId]) REFERENCES [BookedOrganizedHolidays] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_BookedOrganizedHolidaysRoomTypes_RoomTypes_RoomTypeId] FOREIGN KEY ([RoomTypeId]) REFERENCES [RoomTypes] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows how many rooms were booked for a trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidaysRoomTypes';
+SET @description = N'BookedOrganizedHoliday identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidaysRoomTypes', 'COLUMN', N'BookedOrganizedHolidayId';
+SET @description = N'RoopType identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidaysRoomTypes', 'COLUMN', N'RoomTypeId';
+GO
+
+CREATE TABLE [Bookings] (
+    [Id] int NOT NULL IDENTITY,
+    [BookerId] uniqueidentifier NOT NULL,
+    [TripId] int NOT NULL,
+    [TimeOfBooking] datetime2 NOT NULL,
+    [Discriminator] nvarchar(50) NOT NULL,
+    [TotalPrice] decimal(18,2) NOT NULL,
+    [BookingStatus] int NOT NULL,
+    [PaymentId] int NOT NULL,
+    [PaymentStatus] int NOT NULL,
+    [UnorganizedHolidayId] int NULL,
+    [BookedOrganizedHolidayId] int NULL,
+    [BookedCruiseId] int NULL,
+    CONSTRAINT [PK_Bookings] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Bookings_AspNetUsers_BookerId] FOREIGN KEY ([BookerId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Bookings_BookedCruises_BookedCruiseId] FOREIGN KEY ([BookedCruiseId]) REFERENCES [BookedCruises] ([Id]),
+    CONSTRAINT [FK_Bookings_BookedOrganizedHolidays_BookedOrganizedHolidayId] FOREIGN KEY ([BookedOrganizedHolidayId]) REFERENCES [BookedOrganizedHolidays] ([Id]),
+    CONSTRAINT [FK_Bookings_UnorganizedHolidays_UnorganizedHolidayId] FOREIGN KEY ([UnorganizedHolidayId]) REFERENCES [UnorganizedHolidays] ([Id])
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows the whole information about a booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings';
+SET @description = N'Booking identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'Id';
+SET @description = N'Identifier of the person who makes the booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'BookerId';
+SET @description = N'identifier of trip which shows details about the booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'TripId';
+SET @description = N'Exact time of booking the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'TimeOfBooking';
+SET @description = N'Discriminator column which will show what kind of trip has been booked(OrganizedHoliday, UnorganizedHoliday, Cruise)';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'Discriminator';
+SET @description = N'Total price of the trip';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'TotalPrice';
+SET @description = N'Shows current status of the booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'BookingStatus';
+SET @description = N'Payment identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'PaymentId';
+SET @description = N'Shows if booking was payed or not';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Bookings', 'COLUMN', N'PaymentStatus';
+GO
+
+CREATE TABLE [AdditionalPeople] (
+    [Id] int NOT NULL IDENTITY,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [BookingId] int NOT NULL,
+    CONSTRAINT [PK_AdditionalPeople] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AdditionalPeople_Bookings_BookingId] FOREIGN KEY ([BookingId]) REFERENCES [Bookings] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows information about additional people signed for a booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AdditionalPeople';
+SET @description = N'AdditionalPerson identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AdditionalPeople', 'COLUMN', N'Id';
+SET @description = N'First name of additonal person';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AdditionalPeople', 'COLUMN', N'FirstName';
+SET @description = N'Last name of additonal person';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AdditionalPeople', 'COLUMN', N'LastName';
+SET @description = N'Booking identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'AdditionalPeople', 'COLUMN', N'BookingId';
+GO
+
+CREATE TABLE [Payments] (
+    [Id] int NOT NULL IDENTITY,
+    [Amount] decimal(18,2) NULL,
+    [PaymentDate] datetime2 NULL,
+    [PaymentMethod] int NOT NULL,
+    [BookingId] int NOT NULL,
+    CONSTRAINT [PK_Payments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Payments_Bookings_BookingId] FOREIGN KEY ([BookingId]) REFERENCES [Bookings] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This entity shows payment details';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Payments';
+SET @description = N'Payment identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Payments', 'COLUMN', N'Id';
+SET @description = N'Paid amount';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Payments', 'COLUMN', N'Amount';
+SET @description = N'Date of payment';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Payments', 'COLUMN', N'PaymentDate';
+SET @description = N'Method of paying(cash or debit card)';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Payments', 'COLUMN', N'PaymentMethod';
+SET @description = N'Booking identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'Payments', 'COLUMN', N'BookingId';
+GO
+
+CREATE INDEX [IX_Activities_TourId] ON [Activities] ([TourId]);
+GO
+
+CREATE INDEX [IX_ActivitiesBookedOrganizedHolidays_BookedOrganizedHolidayId] ON [ActivitiesBookedOrganizedHolidays] ([BookedOrganizedHolidayId]);
+GO
+
+CREATE INDEX [IX_AdditionalPeople_BookingId] ON [AdditionalPeople] ([BookingId]);
+GO
+
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+GO
+
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+GO
+
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+GO
+
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+GO
+
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+GO
+
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+GO
+
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+GO
+
+CREATE INDEX [IX_BookedCruises_CruiseId] ON [BookedCruises] ([CruiseId]);
+GO
+
+CREATE INDEX [IX_BookedOrganizedHolidays_OrganizedHolidayStartAndEndDateId] ON [BookedOrganizedHolidays] ([OrganizedHolidayStartAndEndDateId]);
+GO
+
+CREATE INDEX [IX_BookedOrganizedHolidaysRoomTypes_RoomTypeId] ON [BookedOrganizedHolidaysRoomTypes] ([RoomTypeId]);
+GO
+
+CREATE INDEX [IX_Bookings_BookedCruiseId] ON [Bookings] ([BookedCruiseId]);
+GO
+
+CREATE INDEX [IX_Bookings_BookedOrganizedHolidayId] ON [Bookings] ([BookedOrganizedHolidayId]);
+GO
+
+CREATE INDEX [IX_Bookings_BookerId] ON [Bookings] ([BookerId]);
+GO
+
+CREATE INDEX [IX_Bookings_UnorganizedHolidayId] ON [Bookings] ([UnorganizedHolidayId]);
+GO
+
+CREATE INDEX [IX_Countries_ContinentId] ON [Countries] ([ContinentId]);
+GO
+
+CREATE INDEX [IX_CruiseDays_CruiseId] ON [CruiseDays] ([CruiseId]);
+GO
+
+CREATE INDEX [IX_CruiseRoomTypesBookedCruises_BookedCruiseId] ON [CruiseRoomTypesBookedCruises] ([BookedCruiseId]);
+GO
+
+CREATE INDEX [IX_CruiseRoomTypesCruisesPrices_CruiseId] ON [CruiseRoomTypesCruisesPrices] ([CruiseId]);
+GO
+
+CREATE INDEX [IX_CruisesDestinations_DestinationId] ON [CruisesDestinations] ([DestinationId]);
+GO
+
+CREATE INDEX [IX_Destinations_CountryId] ON [Destinations] ([CountryId]);
+GO
+
+CREATE INDEX [IX_Hotels_OfferId] ON [Hotels] ([OfferId]);
+GO
+
+CREATE INDEX [IX_HotelsRoomTypesPrices_RoomTypeId] ON [HotelsRoomTypesPrices] ([RoomTypeId]);
+GO
+
+CREATE INDEX [IX_Image_ReviewId] ON [Image] ([ReviewId]);
+GO
+
+CREATE UNIQUE INDEX [IX_Offers_DestinationId] ON [Offers] ([DestinationId]);
+GO
+
+CREATE INDEX [IX_OffersTransportTypesPrices_TransportTypeId] ON [OffersTransportTypesPrices] ([TransportTypeId]);
+GO
+
+CREATE UNIQUE INDEX [IX_OrganizedHolidays_HotelId] ON [OrganizedHolidays] ([HotelId]);
+GO
+
+CREATE UNIQUE INDEX [IX_OrganizedHolidays_OfferId] ON [OrganizedHolidays] ([OfferId]);
+GO
+
+CREATE UNIQUE INDEX [IX_OrganizedHolidays_TourId] ON [OrganizedHolidays] ([TourId]);
+GO
+
+CREATE INDEX [IX_OrganizedHolidays_TransportTypeId] ON [OrganizedHolidays] ([TransportTypeId]);
+GO
+
+CREATE INDEX [IX_OrganizedHolidayStartAndEndDates_OrganizedHolidayId] ON [OrganizedHolidayStartAndEndDates] ([OrganizedHolidayId]);
+GO
+
+CREATE UNIQUE INDEX [IX_Payments_BookingId] ON [Payments] ([BookingId]);
+GO
+
+CREATE INDEX [IX_Reviews_CruiseId] ON [Reviews] ([CruiseId]);
+GO
+
+CREATE INDEX [IX_Reviews_OfferId] ON [Reviews] ([OfferId]);
+GO
+
+CREATE INDEX [IX_Reviews_ReviewerId] ON [Reviews] ([ReviewerId]);
+GO
+
+CREATE INDEX [IX_UnorganizedHolidays_HotelId] ON [UnorganizedHolidays] ([HotelId]);
+GO
+
+CREATE UNIQUE INDEX [IX_UnorganizedHolidays_OfferId] ON [UnorganizedHolidays] ([OfferId]);
+GO
+
+CREATE INDEX [IX_UnorganizedHolidays_RoomTypeId] ON [UnorganizedHolidays] ([RoomTypeId]);
+GO
+
+CREATE INDEX [IX_UnorganizedHolidays_TransportTypeId] ON [UnorganizedHolidays] ([TransportTypeId]);
+GO
+
+CREATE INDEX [IX_UnorganizedHolidaysRoomTypes_RoomTypeId] ON [UnorganizedHolidaysRoomTypes] ([RoomTypeId]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240321175324_Database_Structure_Created', N'6.0.25');
+GO
+
+COMMIT;
+GO
+
