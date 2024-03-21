@@ -1,13 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TouristAgency.Data;
-using TouristAgency.Infrastructure.Data.Models;
+using TouristAgency.Infrastructure.Data.Models.MongoDbModels;
+using TouristAgency.Infrastructure.Data.Models.MssqlModels;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.Configure<ImageContainerDbSettings>(config.GetSection("ImageContainerDatabase"));
+            
             return services;
         }
 
