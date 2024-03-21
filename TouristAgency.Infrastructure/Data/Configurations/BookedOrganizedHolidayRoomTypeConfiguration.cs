@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TouristAgency.Infrastructure.Data.Models;
+using TouristAgency.Infrastructure.Data.Models.MssqlModels;
 
 namespace TouristAgency.Infrastructure.Data.Configurations
 {
