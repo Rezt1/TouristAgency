@@ -50,8 +50,5 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         [Comment("Possible navigation property of ReviewedTripId")]
         public Cruise? Cruise { get; set; }
-
-        [Comment("Images uploaded on review")]
-        public ICollection<Image> Images { get; set; } = new List<Image>();
     }
 }

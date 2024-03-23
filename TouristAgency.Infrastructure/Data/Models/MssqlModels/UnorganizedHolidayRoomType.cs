@@ -15,6 +15,9 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("RoopType identifier")]
         public int RoomTypeId { get; set; }
 
+        [Required]
+        [Comment("Number of booked rooms of current room type")]
+        public int Number { get; set; }
 
         [ForeignKey(nameof(UnorganizedHolidayId))]
         [Comment("Navigation property for UnorganizedHolidayId")]

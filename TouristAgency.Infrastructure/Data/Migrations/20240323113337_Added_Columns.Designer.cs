@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristAgency.Data;
 
@@ -11,9 +12,10 @@ using TouristAgency.Data;
 namespace TouristAgency.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240323113337_Added_Columns")]
+    partial class Added_Columns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,6 +125,25 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MongoDbModels.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int?>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewId");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Activity", b =>
@@ -1245,6 +1266,13 @@ namespace TouristAgency.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MongoDbModels.Image", b =>
+                {
+                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Review", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ReviewId");
+                });
+
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Activity", b =>
                 {
                     b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Tour", "Tour")
@@ -1728,6 +1756,11 @@ namespace TouristAgency.Infrastructure.Migrations
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedHolidayStartAndEndDate", b =>
                 {
                     b.Navigation("BookedOrganizedHolidays");
+                });
+
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Review", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.RoomType", b =>
