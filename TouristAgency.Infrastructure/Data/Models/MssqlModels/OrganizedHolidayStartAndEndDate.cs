@@ -23,11 +23,10 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("Date of coming back from the trip")]
         public DateTime EndDate { get; set; }
 
-        [ForeignKey(nameof(OrganizedHolidayId))]
-        [Comment("Navigation property of OrganizedHolidayId")]
-        public OrganizedHoliday OrganizedHoliday { get; set; } = null!;
 
-        [Comment("Navigation property which leads to the booked trips with everything in it")]
+        [ForeignKey(nameof(OrganizedHolidayId))]
+        public OrganizedOffer OrganizedHoliday { get; set; } = null!;
+
         public ICollection<BookedOrganizedHoliday> BookedOrganizedHolidays { get; set; } = new List<BookedOrganizedHoliday>();
     }
 }

@@ -22,10 +22,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public string Description { get; set; } = string.Empty;
 
 
-        [Comment("Navigation property of OrganizedHolidayId")]
-        public OrganizedHoliday OrganizedHoliday { get; set; } = null!;
+        public OrganizedOffer OrganizedHoliday { get; set; } = null!;
 
-        [Comment("Navigation property which leads to the available activities for the tour")]
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();
     }
 }

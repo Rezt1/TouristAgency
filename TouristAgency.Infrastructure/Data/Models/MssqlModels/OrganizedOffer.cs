@@ -6,15 +6,20 @@ using TouristAgency.Infrastructure.Data.ValidationConstants;
 namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 {
     [Comment("This entity represents a trip which is organized by the agency")]
-    public class OrganizedHoliday
+    public class OrganizedOffer
     {
         [Key]
         [Comment("OrganizedHoliday identifier")]
         public int Id { get; set; }
 
         [Required]
-        [Comment("Offer identifier")]
-        public int OfferId { get; set; }
+        [MaxLength(OrganizedOfferConstants.NameMaxLength)]
+        [Comment("Name of OrganizedHoliday")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [Comment("Destination identifier")]
+        public int DestinationId { get; set; }
 
         [Required]
         [Comment("TransportType identifier")]
@@ -31,6 +36,9 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Required]
         [Comment("Price of OrganizedHoliday, it includes the hotel services price(excluding room price) and transport price. It does not include activities price")]
         public decimal Price { get; set; }
+
+        [Comment("Discount of OrganizedHoliday which could not exist")]
+        public float? Discount { get; set; }
 
         [Required]
         [Comment("Minumum people needed for the organized holiday to be made")]
@@ -55,23 +63,18 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public bool IsActive { get; set; }
 
 
-        [ForeignKey(nameof(OfferId))]
-        [Comment("Navigation property of OfferId")]
-        public Offer Offer { get; set; } = null!;
+        [ForeignKey(nameof(DestinationId))]
+        public Destination Destination { get; set; } = null!;
 
         [ForeignKey(nameof(TransportTypeId))]
-        [Comment("Navigation property of TransportTypeId")]
         public TransportType TransportType { get; set; } = null!;
 
         [ForeignKey(nameof(HotelId))]
-        [Comment("Navigation property of HotelId")]
         public Hotel Hotel { get; set; } = null!;
 
         [ForeignKey(nameof(TourId))]
-        [Comment("Navigation property of TourId")]
         public Tour Tour { get; set; } = null!;
 
-        [Comment("Navigation property showing available dates for booking the trip")]
         public ICollection<OrganizedHolidayStartAndEndDate> OrganizedHolidayStartAndEndDates { get; set; } = new List<OrganizedHolidayStartAndEndDate>();
     }
 }

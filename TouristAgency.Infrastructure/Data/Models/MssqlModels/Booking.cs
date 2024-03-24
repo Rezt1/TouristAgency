@@ -48,22 +48,16 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(BookerId))]
-        [Comment("Navigation property of BookerId")]
         public ApplicationUser ApplicationUser { get; set; } = null!;
 
-        [Comment("Possible navigation property of TripId")]
         public UnorganizedHoliday? UnorganizedHoliday { get; set; }
 
-        [Comment("Possible navigation property of TripId")]
         public BookedOrganizedHoliday? BookedOrganizedHoliday { get; set; }
 
-        [Comment("Possible navigation property of TripId")]
         public BookedCruise? BookedCruise { get; set; }
 
-        [Comment("Navigation property of PaymentId")]
         public Payment Payment { get; set; } = null!;
 
-        [Comment("Navigation property showing how many more people are signed for the booking")]
         public ICollection<AdditionalPerson> AdditionalPeople { get; set; } = new List<AdditionalPerson>();
     }
 }

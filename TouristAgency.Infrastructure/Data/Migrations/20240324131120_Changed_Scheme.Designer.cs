@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristAgency.Data;
 
@@ -11,9 +12,10 @@ using TouristAgency.Data;
 namespace TouristAgency.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324131120_Changed_Scheme")]
+    partial class Changed_Scheme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -833,10 +835,6 @@ namespace TouristAgency.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("Destination identifier");
 
-                    b.Property<float?>("Discount")
-                        .HasColumnType("real")
-                        .HasComment("Discount of OrganizedHoliday which could not exist");
-
                     b.Property<int>("HotelId")
                         .HasColumnType("int")
                         .HasComment("Hotel identifier");
@@ -877,6 +875,10 @@ namespace TouristAgency.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("TransportType identifier");
 
+                    b.Property<float?>("discount")
+                        .HasColumnType("real")
+                        .HasComment("Discount of OrganizedHoliday which could not exist");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DestinationId");
@@ -889,7 +891,7 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     b.HasIndex("TransportTypeId");
 
-                    b.ToTable("OrganizedOffers");
+                    b.ToTable("OrganizedHolidays");
 
                     b.HasComment("This entity represents a trip which is organized by the agency");
                 });

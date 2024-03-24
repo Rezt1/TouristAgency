@@ -9,7 +9,8 @@ namespace TouristAgency.Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Review> builder)
         {
             builder.HasDiscriminator(b => b.Discriminator)
-                .HasValue(nameof(Offer))
+                .HasValue(nameof(UnorganizedOffer))
+                .HasValue(nameof(OrganizedOffer))
                 .HasValue(nameof(Cruise));
         }
     }

@@ -22,10 +22,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public string Description { get; set; } = string.Empty;
 
 
-        [Comment("Navigation property which leads to the price of a room in a given cruise")]
         public ICollection<CruiseRoomTypeCruisePrice> CruiseRoomTypesCruisesPrices { get; set; } = new List<CruiseRoomTypeCruisePrice>();
 
-        [Comment("Navigation property which shows how much the current room type is booked")]
         public ICollection<CruiseRoomTypeBookedCruise> CruiseRoomTypesBookedCruises { get; set; } = new List<CruiseRoomTypeBookedCruise>();
     }
 }

@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 {
     [Comment("This table shows the prices of different transports in different offers")]
-    public class OfferTransportTypePrice
+    public class UnorganizedOfferTransportTypePrice
     {
         [Required]
         [Comment("Offer identifier")]
-        public int OfferId { get; set; }
+        public int UnorganizedOfferId { get; set; }
 
         [Required]
         [Comment("TransportType identifier")]
@@ -20,12 +20,10 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public decimal Price { get; set; }
 
 
-        [ForeignKey(nameof(OfferId))]
-        [Comment("Navigation property of OfferId")]
-        public Offer Offer { get; set; } = null!;
+        [ForeignKey(nameof(UnorganizedOfferId))]
+        public UnorganizedOffer UnorganizedOffer { get; set; } = null!;
 
         [ForeignKey(nameof(TransportTypeId))]
-        [Comment("Navigation property of TransportTypeId")]
         public TransportType TransportType { get; set; } = null!;
     }
 }

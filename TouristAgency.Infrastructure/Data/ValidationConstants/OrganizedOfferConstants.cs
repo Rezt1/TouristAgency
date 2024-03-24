@@ -1,6 +1,6 @@
 ﻿namespace TouristAgency.Infrastructure.Data.ValidationConstants
 {
-    public static class OfferConstants
+    public static class OrganizedOfferConstants
     {
         public const int NameMinLength = 2;
         public const int NameMaxLength = 300;

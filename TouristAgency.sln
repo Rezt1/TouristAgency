@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristAgency", "TouristAgency\TouristAgency.csproj", "{7CDB94EE-5A3B-4A05-B95D-7CACD74D930F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristAgency.Core", "TouristAgency.Core\TouristAgency.Core.csproj", "{56F1257F-95BF-4656-B073-8345CCA9FCC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristAgency.Core", "TouristAgency.Core\TouristAgency.Core.csproj", "{56F1257F-95BF-4656-B073-8345CCA9FCC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristAgency.Infrastructure", "TouristAgency.Infrastructure\TouristAgency.Infrastructure.csproj", "{320BB9AD-184D-442C-B23C-A2AC58CB2A59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristAgency.Infrastructure", "TouristAgency.Infrastructure\TouristAgency.Infrastructure.csproj", "{320BB9AD-184D-442C-B23C-A2AC58CB2A59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

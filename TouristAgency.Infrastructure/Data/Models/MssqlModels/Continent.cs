@@ -17,7 +17,6 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public string Name { get; set; } = string.Empty;
 
 
-        [Comment("Countries which are located in the current Continent")]
         public ICollection<Country> Countries { get; set; } = new List<Country>();
     }
 }

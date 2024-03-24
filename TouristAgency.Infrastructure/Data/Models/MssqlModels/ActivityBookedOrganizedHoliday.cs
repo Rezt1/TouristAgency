@@ -17,11 +17,9 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(ActivityId))]
-        [Comment("Navigation property of ActivityId")]
         public Activity Activity { get; set; } = null!;
 
         [ForeignKey(nameof(BookedOrganizedHolidayId))]
-        [Comment("Navigation property of BookedOrganizedHolidatId")]
         public BookedOrganizedHoliday BookedOrganizedHoliday { get; set; } = null!;
     }
 }

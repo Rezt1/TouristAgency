@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TouristAgency.Data;
 using TouristAgency.Infrastructure.Data.Models.MongoDbModels;
 using TouristAgency.Infrastructure.Data.Models.MssqlModels;
@@ -30,7 +31,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
             })
             .AddRoles<ApplicationRole>()
+            .AddDefaultUI()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddRazorPages();
 
             return services;
         }

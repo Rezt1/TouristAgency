@@ -48,11 +48,11 @@ namespace TouristAgency.Data
 
         public DbSet<HotelRoomTypePrice> HotelsRoomTypesPrices { get; set; } = null!;
 
-        public DbSet<Offer> Offers { get; set; } = null!;
+        public DbSet<UnorganizedOffer> UnorganizedOffers { get; set; } = null!;
 
-        public DbSet<OfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = null!;
+        public DbSet<UnorganizedOfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = null!;
 
-        public DbSet<OrganizedHoliday> OrganizedHolidays { get; set; } = null!;
+        public DbSet<OrganizedOffer> OrganizedOffers { get; set; } = null!;
 
         public DbSet<OrganizedHolidayStartAndEndDate> OrganizedHolidayStartAndEndDates { get; set; } = null!;
 

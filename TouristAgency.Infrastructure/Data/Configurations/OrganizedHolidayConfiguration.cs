@@ -4,12 +4,13 @@ using TouristAgency.Infrastructure.Data.Models.MssqlModels;
 
 namespace TouristAgency.Infrastructure.Data.Configurations
 {
-    public class OrganizedHolidayConfiguration : IEntityTypeConfiguration<OrganizedHoliday>
+    public class OrganizedHolidayConfiguration : IEntityTypeConfiguration<OrganizedOffer>
     {
-        public void Configure(EntityTypeBuilder<OrganizedHoliday> builder)
+        public void Configure(EntityTypeBuilder<OrganizedOffer> builder)
         {
-            builder.HasOne(b => b.Offer)
-                .WithOne(o => o.OrganizedHoliday)
+            builder.HasOne(b => b.Destination)
+                .WithMany(d => d.OrganizedOffers)
+                .HasForeignKey(b => b.DestinationId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

@@ -23,10 +23,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(ContinentId))]
-        [Comment("Continent property for continent identifier")]
         public Continent Continent { get; set; } = null!;
 
-        [Comment("Available Destinations in current Country")]
         public ICollection<Destination> Destinations { get; set; } = new List<Destination>();
     }
 }
