@@ -47,7 +47,7 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         public ICollection<CruiseRoomTypeCruisePrice> CruiseRoomTypesCruisesPrices { get; set; } = new List<CruiseRoomTypeCruisePrice>();
 
-        public ICollection<CruiseDestination> CruisesDestinations { get; set; } = new List<CruiseDestination>();
+        public ICollection<CruisePassByDestination> CruisesDestinations { get; set; } = new List<CruisePassByDestination>();
 
         public ICollection<CruiseDay> CruiseDays { get; set; } = new List<CruiseDay>();
 

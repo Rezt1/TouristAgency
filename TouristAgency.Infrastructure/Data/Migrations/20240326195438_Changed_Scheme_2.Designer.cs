@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristAgency.Data;
 
@@ -11,9 +12,10 @@ using TouristAgency.Data;
 namespace TouristAgency.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326195438_Changed_Scheme_2")]
+    partial class Changed_Scheme_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,8 +138,8 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)")
                         .HasComment("Description of activity");
 
                     b.Property<int>("MinPeopleNeeded")
@@ -360,13 +362,13 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("OrganizedOfferStartAndEndDateId")
+                    b.Property<int>("OrganizedHolidayStartAndEndDateId")
                         .HasColumnType("int")
                         .HasComment("OrganizedHolidayStartAndEndDate identifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizedOfferStartAndEndDateId");
+                    b.HasIndex("OrganizedHolidayStartAndEndDateId");
 
                     b.ToTable("BookedOrganizedHolidays");
 
@@ -584,8 +586,8 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)")
                         .HasComment("Description of current day");
 
                     b.HasKey("Id");
@@ -597,30 +599,21 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.HasComment("This entity shows the description of a single day in a cruise vacation");
                 });
 
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.CruisePassByDestination", b =>
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.CruiseDestination", b =>
                 {
                     b.Property<int>("CruiseId")
                         .HasColumnType("int")
                         .HasComment("Cruise identifier");
 
-                    b.Property<int>("PassByDestinationId")
+                    b.Property<int>("DestinationId")
                         .HasColumnType("int")
                         .HasComment("Destination identifier");
 
-                    b.Property<int?>("DestinationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositionOfDestination")
-                        .HasColumnType("int")
-                        .HasComment("Signifies turn of visiting this destination during the whole cruise");
-
-                    b.HasKey("CruiseId", "PassByDestinationId");
+                    b.HasKey("CruiseId", "DestinationId");
 
                     b.HasIndex("DestinationId");
 
-                    b.HasIndex("PassByDestinationId");
-
-                    b.ToTable("CruisesPassByDestinations");
+                    b.ToTable("CruisesDestinations");
 
                     b.HasComment("This table shows the destination through which cruises pass by");
                 });
@@ -714,8 +707,8 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)")
                         .HasComment("Description of destination");
 
                     b.Property<string>("Name")
@@ -790,6 +783,36 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.HasComment("This table shows the price of a RoomType in a given hotel");
                 });
 
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedHolidayStartAndEndDate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("OrganizedHolidayStartAndEndDate identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2")
+                        .HasComment("Date of coming back from the trip");
+
+                    b.Property<int>("OrganizedHolidayId")
+                        .HasColumnType("int")
+                        .HasComment("OrganizedHoliday identifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2")
+                        .HasComment("Date of setting off for the trip");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizedHolidayId");
+
+                    b.ToTable("OrganizedHolidayStartAndEndDates");
+
+                    b.HasComment("This entity contains the start and end date of an organizedHoliday");
+                });
+
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOffer", b =>
                 {
                     b.Property<int>("Id")
@@ -860,8 +883,7 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ActivityId")
-                        .IsRequired()
+                    b.Property<int>("ActivityId")
                         .HasColumnType("int")
                         .HasComment("Activity identifier");
 
@@ -871,8 +893,8 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)")
                         .HasComment("Description of day");
 
                     b.Property<int>("OrganizedOfferId")
@@ -886,64 +908,6 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.ToTable("OrganizedOfferDays");
 
                     b.HasComment("Entity showing what a day in an organized trip would look like");
-                });
-
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOfferStartAndEndDate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("OrganizedHolidayStartAndEndDate identifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2")
-                        .HasComment("Date of coming back from the trip");
-
-                    b.Property<int>("OrganizedHolidayId")
-                        .HasColumnType("int")
-                        .HasComment("OrganizedHoliday identifier");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2")
-                        .HasComment("Date of setting off for the trip");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizedHolidayId");
-
-                    b.ToTable("OrganizedOfferStartAndEndDates");
-
-                    b.HasComment("This entity contains the start and end date of an organizedHoliday");
-                });
-
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.PassByDestination", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("PassByDestination identifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int")
-                        .HasComment("Country identifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasComment("Name of destination");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("PassByDestinations");
-
-                    b.HasComment("This entity shows destinations through which cruises pass by");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Payment", b =>
@@ -992,8 +956,8 @@ namespace TouristAgency.Infrastructure.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(1600)
-                        .HasColumnType("nvarchar(1600)")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)")
                         .HasComment("Content of review");
 
                     b.Property<int?>("CruiseId")
@@ -1215,6 +1179,380 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.ToTable("UnorganizedOffersTransportTypesPrices");
 
                     b.HasComment("This table shows the prices of different transports in different offers");
+
+                    b.HasData(
+                        new
+                        {
+                            UnorganizedOfferId = 1,
+                            TransportTypeId = 2,
+                            Price = 40m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 1,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 2,
+                            TransportTypeId = 1,
+                            Price = 400m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 3,
+                            TransportTypeId = 1,
+                            Price = 450m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 4,
+                            TransportTypeId = 1,
+                            Price = 225m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 5,
+                            TransportTypeId = 1,
+                            Price = 500m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 5,
+                            TransportTypeId = 2,
+                            Price = 150m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 5,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 6,
+                            TransportTypeId = 1,
+                            Price = 500m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 7,
+                            TransportTypeId = 1,
+                            Price = 525m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 8,
+                            TransportTypeId = 1,
+                            Price = 550m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 8,
+                            TransportTypeId = 2,
+                            Price = 210m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 8,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 9,
+                            TransportTypeId = 1,
+                            Price = 600m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 9,
+                            TransportTypeId = 2,
+                            Price = 240m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 9,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 10,
+                            TransportTypeId = 1,
+                            Price = 700m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 10,
+                            TransportTypeId = 2,
+                            Price = 280m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 10,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 11,
+                            TransportTypeId = 1,
+                            Price = 650m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 11,
+                            TransportTypeId = 2,
+                            Price = 300m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 11,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 12,
+                            TransportTypeId = 1,
+                            Price = 670m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 12,
+                            TransportTypeId = 2,
+                            Price = 310m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 12,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 13,
+                            TransportTypeId = 1,
+                            Price = 680m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 13,
+                            TransportTypeId = 2,
+                            Price = 295m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 13,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 14,
+                            TransportTypeId = 1,
+                            Price = 320m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 14,
+                            TransportTypeId = 2,
+                            Price = 110m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 14,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 15,
+                            TransportTypeId = 1,
+                            Price = 250m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 15,
+                            TransportTypeId = 2,
+                            Price = 95m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 15,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 16,
+                            TransportTypeId = 1,
+                            Price = 310m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 16,
+                            TransportTypeId = 2,
+                            Price = 105m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 16,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 17,
+                            TransportTypeId = 1,
+                            Price = 240m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 17,
+                            TransportTypeId = 2,
+                            Price = 85m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 17,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 18,
+                            TransportTypeId = 1,
+                            Price = 750m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 18,
+                            TransportTypeId = 2,
+                            Price = 310m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 18,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 19,
+                            TransportTypeId = 1,
+                            Price = 200m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 19,
+                            TransportTypeId = 2,
+                            Price = 70m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 19,
+                            TransportTypeId = 3,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 20,
+                            TransportTypeId = 1,
+                            Price = 1400m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 21,
+                            TransportTypeId = 1,
+                            Price = 1320m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 22,
+                            TransportTypeId = 1,
+                            Price = 1350m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 23,
+                            TransportTypeId = 1,
+                            Price = 1380m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 24,
+                            TransportTypeId = 1,
+                            Price = 1500m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 25,
+                            TransportTypeId = 1,
+                            Price = 1490m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 26,
+                            TransportTypeId = 1,
+                            Price = 1200m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 27,
+                            TransportTypeId = 1,
+                            Price = 1440m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 28,
+                            TransportTypeId = 1,
+                            Price = 1400m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 29,
+                            TransportTypeId = 1,
+                            Price = 1300m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 30,
+                            TransportTypeId = 1,
+                            Price = 480m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 31,
+                            TransportTypeId = 1,
+                            Price = 490m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 32,
+                            TransportTypeId = 1,
+                            Price = 500m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 33,
+                            TransportTypeId = 1,
+                            Price = 880m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 34,
+                            TransportTypeId = 1,
+                            Price = 680m
+                        },
+                        new
+                        {
+                            UnorganizedOfferId = 35,
+                            TransportTypeId = 1,
+                            Price = 650m
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1322,13 +1660,13 @@ namespace TouristAgency.Infrastructure.Migrations
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.BookedOrganizedHoliday", b =>
                 {
-                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOfferStartAndEndDate", "OrganizedOfferStartAndEndDate")
+                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedHolidayStartAndEndDate", "OrganizedHolidayStartAndEndDate")
                         .WithMany("BookedOrganizedHolidays")
-                        .HasForeignKey("OrganizedOfferStartAndEndDateId")
+                        .HasForeignKey("OrganizedHolidayStartAndEndDateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrganizedOfferStartAndEndDate");
+                    b.Navigation("OrganizedHolidayStartAndEndDate");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.BookedOrganizedHolidayRoomType", b =>
@@ -1401,7 +1739,7 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.Navigation("Cruise");
                 });
 
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.CruisePassByDestination", b =>
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.CruiseDestination", b =>
                 {
                     b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Cruise", "Cruise")
                         .WithMany("CruisesDestinations")
@@ -1409,19 +1747,15 @@ namespace TouristAgency.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Destination", null)
+                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Destination", "Destination")
                         .WithMany("CruisesDestinations")
-                        .HasForeignKey("DestinationId");
-
-                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.PassByDestination", "PassByDestination")
-                        .WithMany()
-                        .HasForeignKey("PassByDestinationId")
+                        .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cruise");
 
-                    b.Navigation("PassByDestination");
+                    b.Navigation("Destination");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.CruiseRoomTypeBookedCruise", b =>
@@ -1503,6 +1837,17 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.Navigation("RoomType");
                 });
 
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedHolidayStartAndEndDate", b =>
+                {
+                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOffer", "OrganizedHoliday")
+                        .WithMany("OrganizedHolidayStartAndEndDates")
+                        .HasForeignKey("OrganizedHolidayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrganizedHoliday");
+                });
+
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOffer", b =>
                 {
                     b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Destination", "Destination")
@@ -1539,28 +1884,6 @@ namespace TouristAgency.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("OrganizedOffer");
-                });
-
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOfferStartAndEndDate", b =>
-                {
-                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOffer", "OrganizedHoliday")
-                        .WithMany("OrganizedOfferStartAndEndDates")
-                        .HasForeignKey("OrganizedHolidayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrganizedHoliday");
-                });
-
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.PassByDestination", b =>
-                {
-                    b.HasOne("TouristAgency.Infrastructure.Data.Models.MssqlModels.Country", "Country")
-                        .WithMany("PassByDestinations")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Payment", b =>
@@ -1716,8 +2039,6 @@ namespace TouristAgency.Infrastructure.Migrations
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Country", b =>
                 {
                     b.Navigation("Destinations");
-
-                    b.Navigation("PassByDestinations");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.Cruise", b =>
@@ -1757,21 +2078,22 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.Navigation("OrganizedHoliday");
                 });
 
+            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedHolidayStartAndEndDate", b =>
+                {
+                    b.Navigation("BookedOrganizedHolidays");
+                });
+
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOffer", b =>
                 {
-                    b.Navigation("OrganizedOfferDays");
+                    b.Navigation("OrganizedHolidayStartAndEndDates");
 
-                    b.Navigation("OrganizedOfferStartAndEndDates");
+                    b.Navigation("OrganizedOfferDays");
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOfferDay", b =>
                 {
-                    b.Navigation("Activity");
-                });
-
-            modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.OrganizedOfferStartAndEndDate", b =>
-                {
-                    b.Navigation("BookedOrganizedHolidays");
+                    b.Navigation("Activity")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.RoomType", b =>

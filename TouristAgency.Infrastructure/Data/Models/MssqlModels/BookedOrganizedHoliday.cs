@@ -13,11 +13,11 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         [Required]
         [Comment("OrganizedHolidayStartAndEndDate identifier")]
-        public int OrganizedHolidayStartAndEndDateId { get; set; }
+        public int OrganizedOfferStartAndEndDateId { get; set; }
 
 
-        [ForeignKey(nameof(OrganizedHolidayStartAndEndDateId))]
-        public OrganizedHolidayStartAndEndDate OrganizedHolidayStartAndEndDate { get; set; } = null!;
+        [ForeignKey(nameof(OrganizedOfferStartAndEndDateId))]
+        public OrganizedOfferStartAndEndDate OrganizedOfferStartAndEndDate { get; set; } = null!;
 
         public ICollection<BookedOrganizedHolidayRoomType> BookedOrganzedHolidaysRoomTypes { get; set; } = new List<BookedOrganizedHolidayRoomType>();
 

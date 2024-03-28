@@ -31,16 +31,12 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public int MinPeopleNeeded { get; set; }
 
         [Required]
-        [Comment("Shows if the activity is currently available for the tour")]
-        public bool IsAvailable { get; set; }
-
-        [Required]
-        [Comment("Tour identifier")]
-        public int TourId { get; set; }
+        [Comment("OrganizedOfferDay identifier")]
+        public int OrganizedOfferDayId { get; set; }
 
 
-        [ForeignKey(nameof(TourId))]
-        public Tour Tour { get; set; } = null!;
+        [ForeignKey(nameof(OrganizedOfferDayId))]
+        public OrganizedOfferDay OrganizedOfferDay { get; set; } = null!;
 
         public ICollection<ActivityBookedOrganizedHoliday> ActivitiesBookedOrganizedHolidays { get; set; } = new List<ActivityBookedOrganizedHoliday>();
     }

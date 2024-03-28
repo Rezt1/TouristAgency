@@ -25,7 +25,7 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         public ICollection<UnorganizedHoliday> UnorganizedHolidays { get; set; } = new List<UnorganizedHoliday>();
 
-        public ICollection<UnorganizedOfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = new List<UnorganizedOfferTransportTypePrice>();
+        public ICollection<UnorganizedOfferTransportTypePrice> UnorganizedOffersTransportTypesPrices { get; set; } = new List<UnorganizedOfferTransportTypePrice>();
 
         public ICollection<Hotel> Hotels { get; set; } = new List<Hotel>();
 

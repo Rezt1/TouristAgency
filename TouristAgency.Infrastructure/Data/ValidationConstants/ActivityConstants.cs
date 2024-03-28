@@ -6,6 +6,6 @@
         public const int NameMaxLength = 60;
 
         public const int DescriptionMinLength = 40;
-        public const int DescriptionMaxLength = 800;
+        public const int DescriptionMaxLength = 3000;
     }
 }

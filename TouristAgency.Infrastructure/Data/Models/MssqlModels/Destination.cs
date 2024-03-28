@@ -32,7 +32,7 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         public UnorganizedOffer UnorganizedOffer { get; set; } = null!;
 
-        public ICollection<CruiseDestination> CruisesDestinations { get; set; } = new List<CruiseDestination>();
+        public ICollection<CruisePassByDestination> CruisesDestinations { get; set; } = new List<CruisePassByDestination>();
 
         public ICollection<OrganizedOffer> OrganizedOffers { get; set; } = new List<OrganizedOffer>();
     }

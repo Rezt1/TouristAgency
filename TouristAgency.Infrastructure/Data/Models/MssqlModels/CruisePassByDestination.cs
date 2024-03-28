@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 {
     [Comment("This table shows the destination through which cruises pass by")]
-    public class CruiseDestination
+    public class CruisePassByDestination
     {
         [Required]
         [Comment("Cruise identifier")]
@@ -13,13 +13,16 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         [Required]
         [Comment("Destination identifier")]
-        public int DestinationId { get; set; }
+        public int PassByDestinationId { get; set; }
 
+        [Required]
+        [Comment("Signifies turn of visiting this destination during the whole cruise")]
+        public int PositionOfDestination { get; set; }
 
         [ForeignKey(nameof(CruiseId))]
         public Cruise Cruise { get; set; } = null!;
 
-        [ForeignKey(nameof(DestinationId))]
-        public Destination Destination { get; set; } = null!;
+        [ForeignKey(nameof(PassByDestinationId))]
+        public PassByDestination PassByDestination { get; set; } = null!;
     }
 }

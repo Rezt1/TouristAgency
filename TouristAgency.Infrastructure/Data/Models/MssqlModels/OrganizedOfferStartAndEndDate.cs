@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 {
     [Comment("This entity contains the start and end date of an organizedHoliday")]
-    public class OrganizedHolidayStartAndEndDate
+    public class OrganizedOfferStartAndEndDate
     {
         [Key]
         [Comment("OrganizedHolidayStartAndEndDate identifier")]

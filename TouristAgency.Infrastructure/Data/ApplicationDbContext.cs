@@ -34,7 +34,7 @@ namespace TouristAgency.Data
 
         public DbSet<CruiseDay> CruiseDays { get; set; } = null!;
 
-        public DbSet<CruiseDestination> CruisesDestinations { get; set; } = null!;
+        public DbSet<CruisePassByDestination> CruisesPassByDestinations { get; set; } = null!;
 
         public DbSet<CruiseRoomType> CruiseRoomTypes { get; set; } = null!;
 
@@ -50,11 +50,11 @@ namespace TouristAgency.Data
 
         public DbSet<UnorganizedOffer> UnorganizedOffers { get; set; } = null!;
 
-        public DbSet<UnorganizedOfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = null!;
+        public DbSet<UnorganizedOfferTransportTypePrice> UnorganizedOffersTransportTypesPrices { get; set; } = null!;
 
         public DbSet<OrganizedOffer> OrganizedOffers { get; set; } = null!;
 
-        public DbSet<OrganizedHolidayStartAndEndDate> OrganizedHolidayStartAndEndDates { get; set; } = null!;
+        public DbSet<OrganizedOfferStartAndEndDate> OrganizedOfferStartAndEndDates { get; set; } = null!;
 
         public DbSet<Payment> Payments { get; set; } = null!;
 
@@ -62,18 +62,20 @@ namespace TouristAgency.Data
 
         public DbSet<RoomType> RoomTypes { get; set; } = null!;
 
-        public DbSet<Tour> Tours { get; set; } = null!;
-
         public DbSet<TransportType> TransportTypes { get; set; } = null!;
 
         public DbSet<UnorganizedHoliday> UnorganizedHolidays { get; set; } = null!;
 
         public DbSet<UnorganizedHolidayRoomType> UnorganizedHolidaysRoomTypes { get; set; } = null!;
 
+        public DbSet<OrganizedOfferDay> OrganizedOfferDays { get; set; } = null!;
+
+        public DbSet<PassByDestination> PassByDestinations { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new OfferTransportTypePriceConfiguration());
+            builder.ApplyConfiguration(new UnorganizedOfferTransportTypePriceConfiguration());
             builder.ApplyConfiguration(new HotelRoomTypePriceConfiguration());
             builder.ApplyConfiguration(new CruiseRoomTypeCruisePriceConfiguration());
             builder.ApplyConfiguration(new CruiseDestinationConfiguration());
@@ -85,6 +87,7 @@ namespace TouristAgency.Data
             builder.ApplyConfiguration(new ReviewConfiguration());
             builder.ApplyConfiguration(new OrganizedHolidayConfiguration());
             builder.ApplyConfiguration(new UnorganizedHolidayConfiguration());
+            builder.ApplyConfiguration(new ActivityConfiguration());
 
             base.OnModelCreating(builder);
         }

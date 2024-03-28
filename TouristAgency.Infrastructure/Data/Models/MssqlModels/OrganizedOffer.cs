@@ -30,10 +30,6 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public int HotelId { get; set; }
 
         [Required]
-        [Comment("Tour identifier")]
-        public int TourId { get; set; }
-
-        [Required]
         [Comment("Price of OrganizedHoliday, it includes the hotel services price(excluding room price) and transport price. It does not include activities price")]
         public decimal Price { get; set; }
 
@@ -49,16 +45,6 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public int MaxPeople { get; set; }
 
         [Required]
-        [MaxLength(OrganizedHolidayConstants.DayOneDescrpiptionMaxValue)]
-        [Comment("Description of the first day of the trip")]
-        public string DayOneDescription { get; set; } = string.Empty;
-
-        [Required]
-        [MaxLength(OrganizedHolidayConstants.LastDayDescriptionMaxValue)]
-        [Comment("Description of the last day of the trip")]
-        public string LastDayDescription { get; set; } = string.Empty;
-
-        [Required]
         [Comment("Shows if the organized holiday is available or not")]
         public bool IsActive { get; set; }
 
@@ -72,9 +58,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [ForeignKey(nameof(HotelId))]
         public Hotel Hotel { get; set; } = null!;
 
-        [ForeignKey(nameof(TourId))]
-        public Tour Tour { get; set; } = null!;
+        public ICollection<OrganizedOfferDay>  OrganizedOfferDays { get; set; } = new List<OrganizedOfferDay>();    
 
-        public ICollection<OrganizedHolidayStartAndEndDate> OrganizedHolidayStartAndEndDates { get; set; } = new List<OrganizedHolidayStartAndEndDate>();
+        public ICollection<OrganizedOfferStartAndEndDate> OrganizedOfferStartAndEndDates { get; set; } = new List<OrganizedOfferStartAndEndDate>();
     }
 }

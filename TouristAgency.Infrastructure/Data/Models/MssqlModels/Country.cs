@@ -26,5 +26,7 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public Continent Continent { get; set; } = null!;
 
         public ICollection<Destination> Destinations { get; set; } = new List<Destination>();
+
+        public ICollection<PassByDestination> PassByDestinations { get; set; } = new List<PassByDestination>();
     }
 }
