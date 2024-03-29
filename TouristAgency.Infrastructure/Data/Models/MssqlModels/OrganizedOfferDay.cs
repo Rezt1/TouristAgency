@@ -21,7 +21,6 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("Description of day")]
         public string Description { get; set; } = string.Empty;
 
-        [Required]
         [Comment("Activity identifier")]
         public int? ActivityId { get; set; }
 

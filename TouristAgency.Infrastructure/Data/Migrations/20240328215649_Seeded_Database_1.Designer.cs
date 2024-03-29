@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristAgency.Data;
 
@@ -11,9 +12,10 @@ using TouristAgency.Data;
 namespace TouristAgency.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240328215649_Seeded_Database_1")]
+    partial class Seeded_Database_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,13 +106,6 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("ee1db236-356f-48e9-9ba3-3962e8f34fac"),
-                            RoleId = new Guid("00b65b02-defd-44e0-ba06-6ec23d617199")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -830,11 +825,6 @@ namespace TouristAgency.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BulgarianName")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasComment("Name of role in bulgarian");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -857,24 +847,6 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
 
                     b.HasComment("Extended IdentityRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00b65b02-defd-44e0-ba06-6ec23d617199"),
-                            BulgarianName = "Администратор",
-                            ConcurrencyStamp = "ad7842aa-767d-4e92-b00b-cf59fd662d42",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = new Guid("e3ff5c00-2c71-4a66-8533-e1ba370a8066"),
-                            BulgarianName = "Специален гост",
-                            ConcurrencyStamp = "7f699cd7-5f28-4aef-9081-d2cc283b2cad",
-                            Name = "Special guest",
-                            NormalizedName = "SPEICAL GUEST"
-                        });
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.ApplicationUser", b =>
@@ -953,27 +925,6 @@ namespace TouristAgency.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasComment("Extended IdentityUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ee1db236-356f-48e9-9ba3-3962e8f34fac"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "222c45a4-d783-4c89-aee5-18c8af0d4c8c",
-                            Email = "ivaylo20044@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Ivaylo",
-                            LastName = "Hristov",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "IVAYLO20044@GMAIL.COM",
-                            NormalizedUserName = "IVAYLO20044@GMAIL.COM",
-                            PasswordHash = "AEffYjQUs92sA5+7hpjtyNL1iYc//6IP7iB373q6ZfBWGpsZTV2Dy8ZpU/43ZKWpvw==",
-                            PhoneNumber = "0877814910",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "6b56d4a5-2b16-4f76-937f-c430d9870418",
-                            TwoFactorEnabled = false,
-                            UserName = "ivaylo20044@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("TouristAgency.Infrastructure.Data.Models.MssqlModels.BookedCruise", b =>
