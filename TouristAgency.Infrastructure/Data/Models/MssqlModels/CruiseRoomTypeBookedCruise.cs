@@ -15,13 +15,15 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("BookedCruise identifier")]
         public int BookedCruiseId { get; set; }
 
+        [Required]
+        [Comment("Number of booked rooms of current room type")]
+        public int Number { get; set; }
+
 
         [ForeignKey(nameof(CruiseRoomTypeId))]
-        [Comment("Navigation property of CruiseRoomTypeId")]
         public CruiseRoomType CruiseRoomType { get; set; } = null!;
 
         [ForeignKey(nameof(BookedCruiseId))]
-        [Comment("Navigation property of BookedCruiseId")]
         public BookedCruise BookedCruise { get; set; } = null!;
     }
 }

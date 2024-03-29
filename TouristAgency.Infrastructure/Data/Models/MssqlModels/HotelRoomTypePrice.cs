@@ -21,11 +21,9 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(HotelId))]
-        [Comment("Navigation property for HotelId")]
         public Hotel Hotel { get; set; } = null!;
 
         [ForeignKey(nameof(RoomTypeId))]
-        [Comment("Navigation property for RoomTypeId")]
         public RoomType RoomType { get; set; } = null!;
     }
 }

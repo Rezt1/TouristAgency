@@ -1,0 +1,62 @@
+BEGIN TRANSACTION;
+GO
+
+ALTER TABLE [UnorganizedHolidaysRoomTypes] ADD [Number] int NOT NULL DEFAULT 0;
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Number of booked rooms of current room type';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidaysRoomTypes', 'COLUMN', N'Number';
+GO
+
+ALTER TABLE [RoomTypes] ADD [Description] nvarchar(400) NOT NULL DEFAULT N'';
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Description of RoomType';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'RoomTypes', 'COLUMN', N'Description';
+GO
+
+ALTER TABLE [CruiseRoomTypesBookedCruises] ADD [Number] int NOT NULL DEFAULT 0;
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Number of booked rooms of current room type';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypesBookedCruises', 'COLUMN', N'Number';
+GO
+
+ALTER TABLE [CruiseRoomTypes] ADD [Description] nvarchar(400) NOT NULL DEFAULT N'';
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Description of CruiseRoomType';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'CruiseRoomTypes', 'COLUMN', N'Description';
+GO
+
+ALTER TABLE [BookedOrganizedHolidaysRoomTypes] ADD [Number] int NOT NULL DEFAULT 0;
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Number of booked rooms of current room type';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'BookedOrganizedHolidaysRoomTypes', 'COLUMN', N'Number';
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240323113337_Added_Columns', N'6.0.25');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+DROP TABLE [Image];
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240323120546_Dropped_Image', N'6.0.25');
+GO
+
+COMMIT;
+GO

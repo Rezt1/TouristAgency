@@ -25,8 +25,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("Cruise identifier")]
         public int CruiseId { get; set; }
 
+
         [ForeignKey(nameof(CruiseId))]
-        [Comment("Navigation property of CruiseId")]
         public Cruise Cruise { get; set; } = null!;
     }
 }

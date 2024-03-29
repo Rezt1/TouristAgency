@@ -16,17 +16,18 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("Name of RoomType")]
         public string Name { get; set; } = string.Empty;
 
+        [Required]
+        [MaxLength(RoomTypeConstants.DescriptionMaxLength)]
+        [Comment("Description of RoomType")]
+        public string Description { get; set; } = string.Empty;
 
-        [Comment("Navigation property leading to the prices of rooms in given hotels")]
+
         public ICollection<HotelRoomTypePrice> HotelsRoomTypesPrices { get; set; } = new List<HotelRoomTypePrice>();
 
-        [Comment("Navigation property leading to the unorganizedHolidays which booked this kind of room")]
         public ICollection<UnorganizedHoliday> UnorganizedHolidays { get; set; } = new List<UnorganizedHoliday>();
 
-        [Comment("Navigation property which shows how much this room was booked")]
         public ICollection<BookedOrganizedHolidayRoomType> BookedOrganzedHolidaysRoomTypes { get; set; } = new List<BookedOrganizedHolidayRoomType>();
 
-        [Comment("Navigation property whcih shows how much this room type was booked")]
         public ICollection<UnorganizedHolidayRoomType> UnorganizedHolidaysRoomTypes { get; set; } = new List<UnorganizedHolidayRoomType>();
     }
 }

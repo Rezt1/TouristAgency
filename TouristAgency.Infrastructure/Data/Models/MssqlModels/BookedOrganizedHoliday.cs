@@ -13,17 +13,14 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         [Required]
         [Comment("OrganizedHolidayStartAndEndDate identifier")]
-        public int OrganizedHolidayStartAndEndDateId { get; set; }
+        public int OrganizedOfferStartAndEndDateId { get; set; }
 
 
-        [ForeignKey(nameof(OrganizedHolidayStartAndEndDateId))]
-        [Comment("Navigation property of OrganizedHolidayStartAndEndDateId")]
-        public OrganizedHolidayStartAndEndDate OrganizedHolidayStartAndEndDate { get; set; } = null!;
+        [ForeignKey(nameof(OrganizedOfferStartAndEndDateId))]
+        public OrganizedOfferStartAndEndDate OrganizedOfferStartAndEndDate { get; set; } = null!;
 
-        [Comment("Navigation property which shows how many rooms were booked for the trip")]
         public ICollection<BookedOrganizedHolidayRoomType> BookedOrganzedHolidaysRoomTypes { get; set; } = new List<BookedOrganizedHolidayRoomType>();
 
-        [Comment("Navigation property which shows which activities were chosen for the current trip")]
         public ICollection<ActivityBookedOrganizedHoliday> ActivitiesBookedOrganizedHolidays { get; set; } = new List<ActivityBookedOrganizedHoliday>();
     }
 }

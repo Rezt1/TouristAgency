@@ -17,10 +17,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public string Name { get; set; } = string.Empty;
 
 
-        [Comment("Contains UnorganizedHolidays which chose this kind of transport")]
         public ICollection<UnorganizedHoliday> UnorganizedHolidays { get; set; } = new List<UnorganizedHoliday>();
 
-        [Comment("Navigation property which leads to the price of transport for given offer")]
-        public ICollection<OfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = new List<OfferTransportTypePrice>();
+        public ICollection<UnorganizedOfferTransportTypePrice> OffersTransportTypesPrices { get; set; } = new List<UnorganizedOfferTransportTypePrice>();
     }
 }

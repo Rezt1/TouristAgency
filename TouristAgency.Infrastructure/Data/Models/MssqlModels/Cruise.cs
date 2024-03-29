@@ -45,19 +45,14 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         public bool IsActive { get; set; }
 
 
-        [Comment("Navigation property which leads to the price of a room in the cruise")]
         public ICollection<CruiseRoomTypeCruisePrice> CruiseRoomTypesCruisesPrices { get; set; } = new List<CruiseRoomTypeCruisePrice>();
 
-        [Comment("Navigation property which leads to the destinations through which the cruise passes by")]
-        public ICollection<CruiseDestination> CruisesDestinations { get; set; } = new List<CruiseDestination>();
+        public ICollection<CruisePassByDestination> CruisesDestinations { get; set; } = new List<CruisePassByDestination>();
 
-        [Comment("Navigation property which shows description of all days in the cruise")]
         public ICollection<CruiseDay> CruiseDays { get; set; } = new List<CruiseDay>();
 
-        [Comment("Navigation property which shows how many times the cruise was booked and with how many rooms")]
         public ICollection<BookedCruise> BookedCruises { get; set; } = new List<BookedCruise>();
 
-        [Comment("Navigation property which shows review about the current cruise")]
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

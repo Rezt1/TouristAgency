@@ -42,16 +42,12 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
         
         [ForeignKey(nameof(ReviewerId))]
-        [Comment("Navigation property of ReviewerId")]
         public ApplicationUser? ApplicationUser { get; set; }
 
-        [Comment("Possible navigation property of ReviewedTripId")]
-        public Offer? Offer { get; set; }
+        public UnorganizedOffer? Offer { get; set; }
 
-        [Comment("Possible navigation property of ReviewedTripId")]
+        public OrganizedOffer? OrganizedHoliday { get; set; }
+
         public Cruise? Cruise { get; set; }
-
-        [Comment("Images uploaded on review")]
-        public ICollection<Image> Images { get; set; } = new List<Image>();
     }
 }

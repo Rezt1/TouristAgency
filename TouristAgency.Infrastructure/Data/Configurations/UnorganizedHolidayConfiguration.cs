@@ -8,8 +8,9 @@ namespace TouristAgency.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<UnorganizedHoliday> builder)
         {
-            builder.HasOne(b => b.Offer)
-                .WithOne(o => o.UnorganizedHoliday)
+            builder.HasOne(b => b.UnorganizedOffer)
+                .WithMany(uo => uo.UnorganizedHolidays)
+                .HasForeignKey(b => b.UnorganizedOfferId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

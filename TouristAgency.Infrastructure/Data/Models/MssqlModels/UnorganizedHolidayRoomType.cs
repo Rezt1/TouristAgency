@@ -15,13 +15,15 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
         [Comment("RoopType identifier")]
         public int RoomTypeId { get; set; }
 
+        [Required]
+        [Comment("Number of booked rooms of current room type")]
+        public int Number { get; set; }
+
 
         [ForeignKey(nameof(UnorganizedHolidayId))]
-        [Comment("Navigation property for UnorganizedHolidayId")]
         public UnorganizedHoliday UnorganizedHoliday { get; set; } = null!;
 
         [ForeignKey(nameof(RoomTypeId))]
-        [Comment("Navigation property for RoomTypeId")]
         public RoomType RoomType { get; set; } = null!;
     }
 }

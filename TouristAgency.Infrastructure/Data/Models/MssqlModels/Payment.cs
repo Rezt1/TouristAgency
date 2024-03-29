@@ -28,7 +28,6 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(BookingId))]
-        [Comment("Navigation property of BookingId")]
         public Booking Booking { get; set; } = null!;
     }
 }

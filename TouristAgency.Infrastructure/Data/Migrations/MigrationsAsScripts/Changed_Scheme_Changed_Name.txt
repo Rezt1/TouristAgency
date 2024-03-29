@@ -1,0 +1,215 @@
+BEGIN TRANSACTION;
+GO
+
+ALTER TABLE [Hotels] DROP CONSTRAINT [FK_Hotels_Offers_OfferId];
+GO
+
+ALTER TABLE [OffersTransportTypesPrices] DROP CONSTRAINT [FK_OffersTransportTypesPrices_Offers_OfferId];
+GO
+
+ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [FK_OrganizedHolidays_Offers_OfferId];
+GO
+
+ALTER TABLE [Reviews] DROP CONSTRAINT [FK_Reviews_Offers_OfferId];
+GO
+
+ALTER TABLE [UnorganizedHolidays] DROP CONSTRAINT [FK_UnorganizedHolidays_Offers_OfferId];
+GO
+
+DROP TABLE [Offers];
+GO
+
+DROP INDEX [IX_UnorganizedHolidays_OfferId] ON [UnorganizedHolidays];
+GO
+
+DROP INDEX [IX_OrganizedHolidays_OfferId] ON [OrganizedHolidays];
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[UnorganizedHolidays]') AND [c].[name] = N'OfferId');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [UnorganizedHolidays] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [UnorganizedHolidays] DROP COLUMN [OfferId];
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[OrganizedHolidays]') AND [c].[name] = N'OfferId');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [OrganizedHolidays] DROP COLUMN [OfferId];
+GO
+
+EXEC sp_rename N'[OffersTransportTypesPrices].[OfferId]', N'UnorganizedOfferId', N'COLUMN';
+GO
+
+EXEC sp_rename N'[Hotels].[OfferId]', N'UnorganizedOfferId', N'COLUMN';
+GO
+
+EXEC sp_rename N'[Hotels].[IX_Hotels_OfferId]', N'IX_Hotels_UnorganizedOfferId', N'INDEX';
+GO
+
+ALTER TABLE [UnorganizedHolidays] ADD [UnorganizedOfferId] int NOT NULL DEFAULT 0;
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'UnorganizedOffer identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedHolidays', 'COLUMN', N'UnorganizedOfferId';
+GO
+
+ALTER TABLE [Reviews] ADD [OrganizedHolidayId] int NULL;
+GO
+
+ALTER TABLE [OrganizedHolidays] ADD [DestinationId] int NOT NULL DEFAULT 0;
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Destination identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'DestinationId';
+GO
+
+ALTER TABLE [OrganizedHolidays] ADD [Name] nvarchar(300) NOT NULL DEFAULT N'';
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Name of OrganizedHoliday';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'Name';
+GO
+
+ALTER TABLE [OrganizedHolidays] ADD [discount] real NULL;
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'Discount of OrganizedHoliday which could not exist';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'OrganizedHolidays', 'COLUMN', N'discount';
+GO
+
+CREATE TABLE [UnorganizedOffers] (
+    [Id] int NOT NULL IDENTITY,
+    [DestinationId] int NOT NULL,
+    [IsAvailable] bit NOT NULL,
+    CONSTRAINT [PK_UnorganizedOffers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_UnorganizedOffers_Destinations_DestinationId] FOREIGN KEY ([DestinationId]) REFERENCES [Destinations] ([Id]) ON DELETE CASCADE
+);
+DECLARE @defaultSchema AS sysname;
+SET @defaultSchema = SCHEMA_NAME();
+DECLARE @description AS sql_variant;
+SET @description = N'This table shows what we offer for a given destination';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedOffers';
+SET @description = N'Offer identifier';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedOffers', 'COLUMN', N'Id';
+SET @description = N'Identifier of destination in which is the offer';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedOffers', 'COLUMN', N'DestinationId';
+SET @description = N'Checks if the offer is available for booking';
+EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', @defaultSchema, 'TABLE', N'UnorganizedOffers', 'COLUMN', N'IsAvailable';
+GO
+
+CREATE INDEX [IX_UnorganizedHolidays_UnorganizedOfferId] ON [UnorganizedHolidays] ([UnorganizedOfferId]);
+GO
+
+CREATE INDEX [IX_Reviews_OrganizedHolidayId] ON [Reviews] ([OrganizedHolidayId]);
+GO
+
+CREATE INDEX [IX_OrganizedHolidays_DestinationId] ON [OrganizedHolidays] ([DestinationId]);
+GO
+
+CREATE UNIQUE INDEX [IX_UnorganizedOffers_DestinationId] ON [UnorganizedOffers] ([DestinationId]);
+GO
+
+ALTER TABLE [Hotels] ADD CONSTRAINT [FK_Hotels_UnorganizedOffers_UnorganizedOfferId] FOREIGN KEY ([UnorganizedOfferId]) REFERENCES [UnorganizedOffers] ([Id]) ON DELETE CASCADE;
+GO
+
+ALTER TABLE [OffersTransportTypesPrices] ADD CONSTRAINT [FK_OffersTransportTypesPrices_UnorganizedOffers_UnorganizedOfferId] FOREIGN KEY ([UnorganizedOfferId]) REFERENCES [UnorganizedOffers] ([Id]) ON DELETE CASCADE;
+GO
+
+ALTER TABLE [OrganizedHolidays] ADD CONSTRAINT [FK_OrganizedHolidays_Destinations_DestinationId] FOREIGN KEY ([DestinationId]) REFERENCES [Destinations] ([Id]) ON DELETE NO ACTION;
+GO
+
+ALTER TABLE [Reviews] ADD CONSTRAINT [FK_Reviews_OrganizedHolidays_OrganizedHolidayId] FOREIGN KEY ([OrganizedHolidayId]) REFERENCES [OrganizedHolidays] ([Id]);
+GO
+
+ALTER TABLE [Reviews] ADD CONSTRAINT [FK_Reviews_UnorganizedOffers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [UnorganizedOffers] ([Id]);
+GO
+
+ALTER TABLE [UnorganizedHolidays] ADD CONSTRAINT [FK_UnorganizedHolidays_UnorganizedOffers_UnorganizedOfferId] FOREIGN KEY ([UnorganizedOfferId]) REFERENCES [UnorganizedOffers] ([Id]) ON DELETE NO ACTION;
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240324131120_Changed_Scheme', N'6.0.28');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [FK_OrganizedHolidays_Destinations_DestinationId];
+GO
+
+ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [FK_OrganizedHolidays_Hotels_HotelId];
+GO
+
+ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [FK_OrganizedHolidays_Tours_TourId];
+GO
+
+ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [FK_OrganizedHolidays_TransportTypes_TransportTypeId];
+GO
+
+ALTER TABLE [OrganizedHolidayStartAndEndDates] DROP CONSTRAINT [FK_OrganizedHolidayStartAndEndDates_OrganizedHolidays_OrganizedHolidayId];
+GO
+
+ALTER TABLE [Reviews] DROP CONSTRAINT [FK_Reviews_OrganizedHolidays_OrganizedHolidayId];
+GO
+
+ALTER TABLE [OrganizedHolidays] DROP CONSTRAINT [PK_OrganizedHolidays];
+GO
+
+EXEC sp_rename N'[OrganizedHolidays]', N'OrganizedOffers';
+GO
+
+EXEC sp_rename N'[OrganizedOffers].[discount]', N'Discount', N'COLUMN';
+GO
+
+EXEC sp_rename N'[OrganizedOffers].[IX_OrganizedHolidays_TransportTypeId]', N'IX_OrganizedOffers_TransportTypeId', N'INDEX';
+GO
+
+EXEC sp_rename N'[OrganizedOffers].[IX_OrganizedHolidays_TourId]', N'IX_OrganizedOffers_TourId', N'INDEX';
+GO
+
+EXEC sp_rename N'[OrganizedOffers].[IX_OrganizedHolidays_HotelId]', N'IX_OrganizedOffers_HotelId', N'INDEX';
+GO
+
+EXEC sp_rename N'[OrganizedOffers].[IX_OrganizedHolidays_DestinationId]', N'IX_OrganizedOffers_DestinationId', N'INDEX';
+GO
+
+ALTER TABLE [OrganizedOffers] ADD CONSTRAINT [PK_OrganizedOffers] PRIMARY KEY ([Id]);
+GO
+
+ALTER TABLE [OrganizedHolidayStartAndEndDates] ADD CONSTRAINT [FK_OrganizedHolidayStartAndEndDates_OrganizedOffers_OrganizedHolidayId] FOREIGN KEY ([OrganizedHolidayId]) REFERENCES [OrganizedOffers] ([Id]) ON DELETE CASCADE;
+GO
+
+ALTER TABLE [OrganizedOffers] ADD CONSTRAINT [FK_OrganizedOffers_Destinations_DestinationId] FOREIGN KEY ([DestinationId]) REFERENCES [Destinations] ([Id]) ON DELETE NO ACTION;
+GO
+
+ALTER TABLE [OrganizedOffers] ADD CONSTRAINT [FK_OrganizedOffers_Hotels_HotelId] FOREIGN KEY ([HotelId]) REFERENCES [Hotels] ([Id]) ON DELETE CASCADE;
+GO
+
+ALTER TABLE [OrganizedOffers] ADD CONSTRAINT [FK_OrganizedOffers_Tours_TourId] FOREIGN KEY ([TourId]) REFERENCES [Tours] ([Id]) ON DELETE CASCADE;
+GO
+
+ALTER TABLE [OrganizedOffers] ADD CONSTRAINT [FK_OrganizedOffers_TransportTypes_TransportTypeId] FOREIGN KEY ([TransportTypeId]) REFERENCES [TransportTypes] ([Id]) ON DELETE CASCADE;
+GO
+
+ALTER TABLE [Reviews] ADD CONSTRAINT [FK_Reviews_OrganizedOffers_OrganizedHolidayId] FOREIGN KEY ([OrganizedHolidayId]) REFERENCES [OrganizedOffers] ([Id]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20240324131630_Changed_Name', N'6.0.28');
+GO
+
+COMMIT;
+GO

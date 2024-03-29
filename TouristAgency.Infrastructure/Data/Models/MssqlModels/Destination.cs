@@ -28,15 +28,12 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(CountryId))]
-        [Comment("Country property for country identifier")]
         public Country Country { get; set; } = null!;
 
-        [Required]
-        [Comment("Offer property for what offer we have for the current destination")]
-        public Offer Offer { get; set; } = null!;
+        public UnorganizedOffer UnorganizedOffer { get; set; } = null!;
 
+        public ICollection<CruisePassByDestination> CruisesDestinations { get; set; } = new List<CruisePassByDestination>();
 
-        [Comment("Navigation property which leads to the cruises which pass by this destination")]
-        public ICollection<CruiseDestination> CruisesDestinations { get; set; } = new List<CruiseDestination>();
+        public ICollection<OrganizedOffer> OrganizedOffers { get; set; } = new List<OrganizedOffer>();
     }
 }

@@ -17,11 +17,8 @@ namespace TouristAgency.Infrastructure.Data.Models.MssqlModels
 
 
         [ForeignKey(nameof(CruiseId))]
-        [Comment("Navigation property of CruiseId")]
         public Cruise Cruise { get; set; } = null!;
 
-
-        [Comment("Navigation property which shows how many rooms were booked for the current cruise")]
         public ICollection<CruiseRoomTypeBookedCruise> CruiseRoomTypesBookedCruises { get; set; } = new List<CruiseRoomTypeBookedCruise>();
     }
 }
